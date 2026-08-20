@@ -137,18 +137,20 @@ body.still .cursor{display:none !important}
 }
 [data-anim="up"].in{opacity:1;transform:none}
 
-/* 画像: 幕が引かれるようなワイプ + わずかなスケール */
-[data-anim="wipe"]{
+/* 画像: 幕が引かれるようなワイプ + わずかなスケール
+   ※クリップは子要素へ適用(自身を全クリップするとIntersectionObserverが発火しない) */
+[data-anim="wipe"] > *{
   clip-path:inset(0 100% 0 0);
   transition:clip-path 1.35s var(--ease-soft);
   transition-delay:var(--d,0ms);
+  display:block;
 }
 [data-anim="wipe"] img{
   transform:scale(1.12);
-  transition:transform 1.6s var(--ease-soft);
+  transition:transform 1.6s var(--ease-soft),box-shadow .8s var(--ease);
   transition-delay:var(--d,0ms);
 }
-[data-anim="wipe"].in{clip-path:inset(0 0 0 0)}
+[data-anim="wipe"].in > *{clip-path:inset(0 0 0 0)}
 [data-anim="wipe"].in img{transform:scale(1)}
 
 /* 見出し: 行マスクからのせり上がり */
@@ -298,17 +300,17 @@ body.still .motion-toggle .mt-sei{background:var(--ink);color:var(--paper)}
   margin-top:1.6rem;font-size:clamp(.92rem,1.4vw,1.05rem);color:var(--ink-soft);
   opacity:0;animation:fadeUp 1.3s var(--ease-out) forwards 2.25s;
 }
-/* 生成した墨の一筆(白背景JPG)を multiply で敷く */
+/* 生成した墨の一筆(透過PNG) */
 .hero-stroke{
-  position:absolute;left:-4%;bottom:-5.2rem;
-  width:min(46rem,84%);
-  mix-blend-mode:multiply;opacity:0;
-  animation:strokeIn 2s var(--ease-soft) forwards 2.4s;
+  position:absolute;left:-8%;bottom:-12rem;
+  width:min(32rem,66%);
+  opacity:0;
+  animation:strokeIn 2.2s var(--ease-soft) forwards 2.5s;
   pointer-events:none;
 }
 @keyframes strokeIn{
   from{opacity:0;clip-path:inset(0 100% 0 0)}
-  to{opacity:.8;clip-path:inset(0 0 0 0)}
+  to{opacity:.45;clip-path:inset(0 0 0 0)}
 }
 @keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
 
@@ -331,25 +333,32 @@ body.still .motion-toggle .mt-sei{background:var(--ink);color:var(--paper)}
    Statement
    ========================================================= */
 .statement{
-  position:relative;
+  position:relative;overflow:hidden;
   padding:clamp(8rem,18vh,13rem) 1.5rem;
   text-align:center;
-  background:
-    url("../assets/img/textures/inkwash.jpg") no-repeat right -12% top -8% / clamp(20rem,36vw,32rem) auto;
-  background-blend-mode:multiply;
 }
+.statement::before{
+  content:"";position:absolute;z-index:0;pointer-events:none;
+  right:-10%;top:-6%;
+  width:min(30rem,46vw);aspect-ratio:4/7;
+  background:url("../assets/img/textures/inkwash.jpg") no-repeat center / cover;
+  mix-blend-mode:multiply;opacity:.4;
+  -webkit-mask-image:radial-gradient(closest-side,#000 38%,transparent 76%);
+  mask-image:radial-gradient(closest-side,#000 38%,transparent 76%);
+}
+.statement > *{position:relative;z-index:1}
 .statement-text{
   font-size:clamp(1.05rem,2vw,1.45rem);
   letter-spacing:.14em;line-height:2.6;
 }
 .statement-seal{
-  display:inline-grid;place-items:center;
+  display:inline-flex;align-items:center;justify-content:center;
   margin-top:3.2rem;
-  width:3.2rem;height:3.2rem;
+  width:3rem;height:3rem;
   border:1.5px solid var(--shu);color:var(--shu);
-  font-size:1rem;letter-spacing:.08em;line-height:1.15;
-  writing-mode:vertical-rl;border-radius:4px;
-  transform:rotate(-2deg);
+  font-size:.92rem;letter-spacing:.06em;text-indent:.06em;line-height:1;
+  border-radius:5px;
+  transform:rotate(-3deg);
   transition:transform .5s var(--ease-out),box-shadow .5s;
 }
 .statement-seal:hover{transform:rotate(0deg) scale(1.06);box-shadow:0 10px 24px -12px rgba(168,60,43,.5)}
@@ -491,16 +500,6 @@ body.still .motion-toggle .mt-sei{background:var(--ink);color:var(--paper)}
 }
 .col-item:hover img{transform:scale(1.06)}
 .col-item:hover figure::after{background:rgba(28,26,23,.18)}
-.ci-view{
-  position:absolute;left:50%;top:50%;z-index:1;
-  transform:translate(-50%,-50%) translateY(14px);
-  font-family:var(--sans);font-size:.72rem;letter-spacing:.3em;text-indent:.3em;
-  color:#fff;border:1px solid rgba(255,255,255,.75);border-radius:999px;
-  padding:.55em 1.5em;backdrop-filter:blur(3px);
-  opacity:0;transition:opacity .5s var(--ease-out),transform .55s var(--ease-out);
-  white-space:nowrap;
-}
-.col-item:hover .ci-view{opacity:1;transform:translate(-50%,-50%)}
 .ci-badge{
   position:absolute;top:.8rem;left:.9rem;z-index:1;
   font-size:.64rem;letter-spacing:.3em;text-indent:.15em;padding:.3em .8em;
@@ -543,8 +542,10 @@ body.still .motion-toggle .mt-sei{background:var(--ink);color:var(--paper)}
 .order::before{
   content:"";position:absolute;right:-6%;bottom:-14%;width:clamp(18rem,34vw,30rem);aspect-ratio:9/16;
   background:url("../assets/img/textures/inkwash.jpg") no-repeat center / cover;
-  mix-blend-mode:multiply;opacity:.5;pointer-events:none;
+  mix-blend-mode:multiply;opacity:.35;pointer-events:none;
   transform:scaleX(-1);
+  -webkit-mask-image:radial-gradient(closest-side,#000 36%,transparent 74%);
+  mask-image:radial-gradient(closest-side,#000 36%,transparent 74%);
 }
 .order-grid{
   max-width:1200px;margin:0 auto;
@@ -565,9 +566,9 @@ body.still .motion-toggle .mt-sei{background:var(--ink);color:var(--paper)}
   border-color:transparent;
 }
 .oc-kanji{
-  position:absolute;right:-.6rem;bottom:-2.4rem;
-  font-size:8.5rem;font-weight:800;line-height:1;
-  color:transparent;-webkit-text-stroke:1px rgba(168,60,43,.14);
+  position:absolute;right:-1.2rem;bottom:-2.6rem;
+  font-size:6.8rem;font-weight:800;line-height:1;
+  color:transparent;-webkit-text-stroke:1px rgba(168,60,43,.12);
   pointer-events:none;user-select:none;
   transition:transform .8s var(--ease-out),-webkit-text-stroke-color .8s;
 }
@@ -636,7 +637,7 @@ body.still .motion-toggle .mt-sei{background:var(--ink);color:var(--paper)}
   font-size:clamp(2rem,4vw,3rem);font-weight:600;letter-spacing:.22em;
   line-height:1.35;margin-bottom:1.6rem;
 }
-.about-name span{
+.about-name .en{
   font-family:var(--latin);font-size:1rem;font-weight:400;font-style:italic;
   color:var(--ink-faint);letter-spacing:.2em;margin-left:1.2rem;
 }
@@ -692,6 +693,7 @@ body.still .motion-toggle .mt-sei{background:var(--ink);color:var(--paper)}
   display:grid;place-items:center;
   opacity:0;transition:opacity .5s var(--ease-soft);
 }
+.lightbox[hidden]{display:none}
 .lightbox.on{opacity:1}
 .lb-fig{
   margin:0;max-width:min(92vw,760px);max-height:88vh;text-align:center;
@@ -723,7 +725,7 @@ body.still .motion-toggle .mt-sei{background:var(--ink);color:var(--paper)}
   .order-grid{grid-template-columns:1fr;max-width:560px}
   .about{grid-template-columns:1fr}
   .hero-enso{opacity:.22}
-  .hero-stroke{bottom:-3.4rem}
+  .hero-stroke{bottom:-11rem;width:min(24rem,78%);left:-4%}
 }
 @media (max-width: 760px){
   .site-nav{
