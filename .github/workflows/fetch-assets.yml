@@ -1,14 +1,14 @@
-name: Fetch video assets
+name: Fetch generated assets
 
-# 生成済み動画(外部CDN)をリポジトリに取り込むワークフロー。
+# 生成済みアセット(外部CDN)をリポジトリに取り込むワークフロー。
 # このリポジトリのコンテナ環境からは当該CDNへ直接アクセスできないため、
-# GitHub Actions ランナー経由でダウンロード・圧縮・コミットする。
-# .github/video-sources.json を更新してpushすると実行される。
+# GitHub Actions ランナー経由でダウンロード・最適化・コミットする。
+# .github/asset-sources.json を更新してpushすると実行される。
 
 on:
   push:
     paths:
-      - ".github/video-sources.json"
+      - ".github/asset-sources.json"
 
 permissions:
   contents: write
@@ -22,37 +22,36 @@ jobs:
       - name: Install ffmpeg
         run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
 
-      - name: Download and compress videos
+      - name: Download and optimize assets
         run: |
           set -eu
-          mkdir -p assets/video preview
-          for name in mai enso kansha; do
-            url=$(jq -r ".${name}" .github/video-sources.json)
+          SRC=.github/asset-sources.json
+          mkdir -p assets/img/textures assets/video
+
+          # 画像: JPGへ変換し長辺を制限(maxはJSONのwidthキー、既定1600)
+          for name in $(jq -r '(.images // {}) | keys[]' "$SRC"); do
+            url=$(jq -r ".images[\"${name}\"].url" "$SRC")
+            width=$(jq -r ".images[\"${name}\"].width // 1600" "$SRC")
+            curl -fsSL -o "/tmp/${name}.src" "$url"
+            ffmpeg -y -loglevel error -i "/tmp/${name}.src" \
+              -vf "scale='min(${width},iw)':-2" -q:v 5 \
+              "assets/img/textures/${name}.jpg"
+          done
+
+          # 動画: 720pへ圧縮(webサイズ)
+          for name in $(jq -r '(.videos // {}) | keys[]' "$SRC"); do
+            url=$(jq -r ".videos[\"${name}\"]" "$SRC")
             curl -fsSL -o "/tmp/${name}.mp4" "$url"
             ffmpeg -y -loglevel error -i "/tmp/${name}.mp4" \
               -vf "scale=720:-2" -c:v libx264 -preset slow -crf 26 \
               -pix_fmt yuv420p -movflags +faststart -an \
               "assets/video/${name}.mp4"
           done
-          # 確認用フレームモンタージュ(各動画から3フレーム)
-          for name in mai enso kansha; do
-            for t in 0.2 2.4 4.6; do
-              ffmpeg -y -loglevel error -ss "$t" -i "assets/video/${name}.mp4" \
-                -frames:v 1 -vf scale=240:-2 "/tmp/f_${name}_${t}.jpg"
-            done
-          done
-          ffmpeg -y -loglevel error \
-            -i /tmp/f_mai_0.2.jpg -i /tmp/f_mai_2.4.jpg -i /tmp/f_mai_4.6.jpg \
-            -i /tmp/f_enso_0.2.jpg -i /tmp/f_enso_2.4.jpg -i /tmp/f_enso_4.6.jpg \
-            -i /tmp/f_kansha_0.2.jpg -i /tmp/f_kansha_2.4.jpg -i /tmp/f_kansha_4.6.jpg \
-            -filter_complex "[0][1][2]hstack=3[r0];[3][4][5]hstack=3[r1];[6][7][8]hstack=3[r2];[r0][r1][r2]vstack=3" \
-            -q:v 4 preview/video-frames.jpg
-          ls -la assets/video preview
+          ls -la assets/img/textures assets/video || true
 
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/video preview
-          git commit -m "Add ink-motion videos (compressed for web)"
-          git push
+          git add assets
+          git diff --cached --quiet || { git commit -m "Add generated assets (optimized for web)"; git push; }

@@ -12,34 +12,40 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='38' fill='none' stroke='%231c1a17' stroke-width='9' stroke-linecap='round' stroke-dasharray='215 24' transform='rotate(-70 50 50)'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;800&family=Zen+Kaku+Gothic+New:wght@300;400;500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;800&family=Zen+Kaku+Gothic+New:wght@300;400;500&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<!-- ===== Loading ink veil ===== -->
+<!-- ===== Loading sequence ===== -->
 <div class="veil" id="veil" aria-hidden="true">
-  <svg class="veil-enso" viewBox="0 0 120 120">
-    <circle cx="60" cy="60" r="44" pathLength="100"/>
-  </svg>
+  <div class="veil-inner">
+    <svg class="veil-enso" viewBox="0 0 120 120">
+      <circle cx="60" cy="60" r="44" pathLength="100"/>
+    </svg>
+    <p class="veil-name">衛藤仁胡</p>
+    <p class="veil-en">Eto Niko</p>
+  </div>
 </div>
+
+<!-- ===== Custom cursor (desktop) ===== -->
+<div class="cursor" id="cursor" aria-hidden="true"><span class="cursor-label"></span></div>
 
 <!-- ===== Header ===== -->
 <header class="site-header" id="siteHeader">
-  <a class="brand" href="#top">
+  <a class="brand" href="#top" data-magnetic>
     <span class="brand-ja">衛藤仁胡</span>
     <span class="brand-en">Eto Niko</span>
   </a>
   <nav class="site-nav" id="siteNav" aria-label="メインナビゲーション">
-    <a href="#works">作品<small>Works</small></a>
-    <a href="#motion">動<small>Motion</small></a>
-    <a href="#collection">一覧<small>Collection</small></a>
-    <a href="#order">誂え<small>Order</small></a>
-    <a href="#about">仁胡<small>About</small></a>
-    <a href="#contact">便り<small>Contact</small></a>
+    <a href="#works" data-cursor><span>作品</span><small>Works</small></a>
+    <a href="#collection" data-cursor><span>一覧</span><small>Collection</small></a>
+    <a href="#order" data-cursor><span>誂え</span><small>Commission</small></a>
+    <a href="#about" data-cursor><span>仁胡</span><small>About</small></a>
+    <a href="#contact" data-cursor><span>便り</span><small>Contact</small></a>
   </nav>
   <div class="header-tools">
-    <button class="motion-toggle" id="motionToggle" type="button" aria-pressed="false" title="動きのオン・オフを切り替え">
+    <button class="motion-toggle" id="motionToggle" type="button" aria-pressed="false" title="演出のオン・オフを切り替え" data-cursor>
       <span class="mt-dou">動</span><span class="mt-sei">静</span>
     </button>
     <button class="nav-burger" id="navBurger" type="button" aria-label="メニュー"><span></span><span></span></button>
@@ -50,250 +56,248 @@
 
   <!-- ===== Hero ===== -->
   <section class="hero" id="hero">
-    <div class="hero-photo">
+    <div class="hero-photo" data-parallax="0.12">
       <img src="assets/img/hero.jpg" alt="筆を執る書家・衛藤仁胡の手元" id="heroImg">
     </div>
     <svg class="hero-enso" viewBox="0 0 120 120" aria-hidden="true">
       <circle cx="60" cy="60" r="46" pathLength="100"/>
     </svg>
     <div class="hero-copy">
-      <p class="hero-lead tate">一筆に、いのちを。</p>
-      <h1 class="hero-title">
-        <span class="hero-name">衛藤仁胡</span>
-        <span class="hero-name-en">Eto Niko — Japanese Calligraphy Artist</span>
-      </h1>
-      <p class="hero-sub">文字の美を追求し、独自の表現へと昇華させた書。<br>静けさの中に、墨の躍動を。</p>
+      <p class="hero-lead tate"><span class="tate-mask">一筆に、いのちを。</span></p>
+      <div class="hero-title">
+        <h1 class="hero-name" id="heroName" aria-label="衛藤仁胡">衛藤仁胡</h1>
+        <p class="hero-name-en">Eto Niko — Japanese Calligraphy Artist</p>
+        <p class="hero-sub">文字の美を追求し、独自の表現へと昇華させた書。<br>静けさの中に、確かな躍動を。</p>
+        <img class="hero-stroke" src="assets/img/textures/stroke.jpg" alt="" aria-hidden="true">
+      </div>
     </div>
-    <a class="scroll-cue" href="#statement"><span>scroll</span><i></i></a>
+    <a class="scroll-cue" href="#statement" data-cursor><span>Scroll</span><i></i></a>
   </section>
 
   <!-- ===== Statement ===== -->
   <section class="statement" id="statement">
-    <p class="statement-text reveal">
-      書は、<em>止まった瞬間の舞</em>である。<br>
-      筆が紙に触れ、離れるまでの一瞬に、<br class="sp">呼吸と時間が封じ込められる。<br>
-      その静けさの奥にある「動」を、<br class="sp">感じていただけたら。
+    <p class="statement-text" data-anim="lines">
+      <span class="line">書は、一瞬の呼吸を紙に封じる芸術。</span>
+      <span class="line">筆が触れ、離れるまでのわずかな時間に、</span>
+      <span class="line">その人の生きてきた時間のすべてが滲む。</span>
     </p>
-    <span class="statement-seal" aria-hidden="true">仁胡</span>
+    <span class="statement-seal" data-anim="fade" aria-hidden="true">仁胡</span>
   </section>
 
   <!-- ===== Featured works ===== -->
   <section class="works" id="works">
-    <header class="sec-head reveal">
-      <p class="sec-no">一</p>
-      <h2 class="sec-title">作品<span>Works</span></h2>
-      <p class="sec-desc">一点、一点。同じ文字は、二度と書けない。<br>いま出会える作品たちです。</p>
+    <header class="sec-head">
+      <p class="sec-label" data-anim="fade"><span class="sec-index">01</span><span class="sec-rule"></span><span class="sec-en">Works</span></p>
+      <h2 class="sec-title" data-anim="lines"><span class="line">作品</span></h2>
+      <p class="sec-desc" data-anim="fade" data-delay="200">一点、一点。同じ文字は、二度と書けない。<br>いま出会える作品たちです。</p>
     </header>
 
     <!-- 月 -->
-    <article class="stage reveal" data-kanji="月">
-      <figure class="stage-fig">
-        <a class="zoomable" href="assets/img/works/tsuki-frame.jpg" data-title="月 — moon" data-price="¥45,000" data-note="額装 / Frame">
+    <article class="stage" data-kanji="月">
+      <figure class="stage-fig" data-anim="wipe">
+        <a class="zoomable" href="assets/img/works/tsuki-frame.jpg" data-title="月 — moon" data-price="¥45,000" data-note="額装 / Frame" data-cursor="view" data-tilt>
           <img src="assets/img/works/tsuki-frame.jpg" alt="書作品「月」額装" loading="lazy">
         </a>
       </figure>
       <div class="stage-info">
-        <p class="stage-cat">Frame — 額装</p>
-        <h3 class="stage-name">月<span class="stage-name-en">moon</span></h3>
-        <p class="stage-essay">満ちて、欠けて、また満ちる。<br>静かな夜の呼吸を、一筆に。</p>
-        <p class="stage-price">¥45,000 <span class="stock ok">販売中</span></p>
-        <a class="stage-link" href="#contact" data-shop-link>この作品について問い合わせる<i>→</i></a>
+        <p class="stage-cat" data-anim="fade">Frame — 額装</p>
+        <h3 class="stage-name" data-anim="lines"><span class="line">月<span class="stage-name-en">moon</span></span></h3>
+        <p class="stage-essay" data-anim="fade" data-delay="150">満ちて、欠けて、また満ちる。<br>静かな夜の呼吸を、一筆に。</p>
+        <p class="stage-price" data-anim="fade" data-delay="250">¥45,000 <span class="stock ok">販売中</span></p>
+        <a class="stage-link" href="#contact" data-shop-link data-anim="fade" data-delay="350" data-cursor>この作品について問い合わせる<i>→</i></a>
       </div>
     </article>
 
     <!-- ひかり -->
-    <article class="stage rev reveal" data-kanji="光">
-      <figure class="stage-fig">
-        <a class="zoomable" href="assets/img/works/hikari.jpg" data-title="ひかり — Glow" data-price="¥45,000" data-note="パネル / Panel">
+    <article class="stage rev" data-kanji="光">
+      <figure class="stage-fig" data-anim="wipe">
+        <a class="zoomable" href="assets/img/works/hikari.jpg" data-title="ひかり — Glow" data-price="¥45,000" data-note="パネル / Panel" data-cursor="view" data-tilt>
           <img src="assets/img/works/hikari.jpg" alt="書作品「ひかり」パネル" loading="lazy">
         </a>
       </figure>
       <div class="stage-info">
-        <p class="stage-cat">Panel — パネル</p>
-        <h3 class="stage-name">ひかり<span class="stage-name-en">Glow</span></h3>
-        <p class="stage-essay">闇があるから、ひかりは生まれる。<br>細く、強く、まっすぐに。</p>
-        <p class="stage-price">¥45,000 <span class="stock ok">販売中</span></p>
-        <a class="stage-link" href="#contact" data-shop-link>この作品について問い合わせる<i>→</i></a>
+        <p class="stage-cat" data-anim="fade">Panel — パネル</p>
+        <h3 class="stage-name" data-anim="lines"><span class="line">ひかり<span class="stage-name-en">Glow</span></span></h3>
+        <p class="stage-essay" data-anim="fade" data-delay="150">闇があるから、ひかりは生まれる。<br>細く、強く、まっすぐに。</p>
+        <p class="stage-price" data-anim="fade" data-delay="250">¥45,000 <span class="stock ok">販売中</span></p>
+        <a class="stage-link" href="#contact" data-shop-link data-anim="fade" data-delay="350" data-cursor>この作品について問い合わせる<i>→</i></a>
       </div>
     </article>
 
     <!-- 海 -->
-    <article class="stage reveal" data-kanji="海">
-      <figure class="stage-fig">
-        <a class="zoomable" href="assets/img/works/umi-spring.jpg" data-title="海 — sea" data-price="¥45,000" data-note="パネル / Panel">
+    <article class="stage" data-kanji="海">
+      <figure class="stage-fig" data-anim="wipe">
+        <a class="zoomable" href="assets/img/works/umi-spring.jpg" data-title="海 — sea" data-price="¥45,000" data-note="パネル / Panel" data-cursor="view" data-tilt>
           <img src="assets/img/works/umi-spring.jpg" alt="書作品「海」淡彩パネル" loading="lazy">
         </a>
       </figure>
       <div class="stage-info">
-        <p class="stage-cat">Panel — パネル</p>
-        <h3 class="stage-name">海<span class="stage-name-en">sea</span></h3>
-        <p class="stage-essay">淡い春の海。寄せてはかえす<br>波の記憶を、にじみに込めて。</p>
-        <p class="stage-price">¥45,000 <span class="stock ok">販売中</span></p>
-        <a class="stage-link" href="#contact" data-shop-link>この作品について問い合わせる<i>→</i></a>
+        <p class="stage-cat" data-anim="fade">Panel — パネル</p>
+        <h3 class="stage-name" data-anim="lines"><span class="line">海<span class="stage-name-en">sea</span></span></h3>
+        <p class="stage-essay" data-anim="fade" data-delay="150">淡い春の海。寄せてはかえす<br>波の記憶を、にじみに込めて。</p>
+        <p class="stage-price" data-anim="fade" data-delay="250">¥45,000 <span class="stock ok">販売中</span></p>
+        <a class="stage-link" href="#contact" data-shop-link data-anim="fade" data-delay="350" data-cursor>この作品について問い合わせる<i>→</i></a>
       </div>
     </article>
 
     <!-- 舞 -->
-    <article class="stage rev reveal" data-kanji="舞">
-      <figure class="stage-fig">
-        <a class="zoomable" href="assets/img/works/mai.jpg" data-title="舞 — Dance" data-price="¥42,000" data-note="額装 / Frame">
+    <article class="stage rev" data-kanji="舞">
+      <figure class="stage-fig" data-anim="wipe">
+        <a class="zoomable" href="assets/img/works/mai.jpg" data-title="舞 — Dance" data-price="¥42,000" data-note="額装 / Frame" data-cursor="view" data-tilt>
           <img src="assets/img/works/mai.jpg" alt="書作品「舞」額装" loading="lazy">
         </a>
       </figure>
       <div class="stage-info">
-        <p class="stage-cat">Frame — 額装</p>
-        <h3 class="stage-name">舞<span class="stage-name-en">Dance</span></h3>
-        <p class="stage-essay">風をまとい、紙の上で舞う。<br>墨が描く、いのちの軌跡。</p>
-        <p class="stage-price">¥42,000 <span class="stock ok">販売中</span></p>
-        <a class="stage-link" href="#contact" data-shop-link>この作品について問い合わせる<i>→</i></a>
+        <p class="stage-cat" data-anim="fade">Frame — 額装</p>
+        <h3 class="stage-name" data-anim="lines"><span class="line">舞<span class="stage-name-en">Dance</span></span></h3>
+        <p class="stage-essay" data-anim="fade" data-delay="150">風をまとい、紙の上で舞う。<br>墨が描く、いのちの軌跡。</p>
+        <p class="stage-price" data-anim="fade" data-delay="250">¥42,000 <span class="stock ok">販売中</span></p>
+        <a class="stage-link" href="#contact" data-shop-link data-anim="fade" data-delay="350" data-cursor>この作品について問い合わせる<i>→</i></a>
       </div>
     </article>
 
     <!-- 福 -->
-    <article class="stage reveal" data-kanji="福">
-      <figure class="stage-fig">
-        <a class="zoomable" href="assets/img/works/fuku.jpg" data-title="福 — Blessing" data-price="¥42,000" data-note="額装 / Frame">
+    <article class="stage" data-kanji="福">
+      <figure class="stage-fig" data-anim="wipe">
+        <a class="zoomable" href="assets/img/works/fuku.jpg" data-title="福 — Blessing" data-price="¥42,000" data-note="額装 / Frame" data-cursor="view" data-tilt>
           <img src="assets/img/works/fuku.jpg" alt="書作品「福」額装" loading="lazy">
         </a>
       </figure>
       <div class="stage-info">
-        <p class="stage-cat">Frame — 額装</p>
-        <h3 class="stage-name">福<span class="stage-name-en">Blessing</span></h3>
-        <p class="stage-essay">まるく、やわらかく。<br>日々の暮らしに、そっと福を。</p>
-        <p class="stage-price">¥42,000 <span class="stock ok">販売中</span></p>
-        <a class="stage-link" href="#contact" data-shop-link>この作品について問い合わせる<i>→</i></a>
+        <p class="stage-cat" data-anim="fade">Frame — 額装</p>
+        <h3 class="stage-name" data-anim="lines"><span class="line">福<span class="stage-name-en">Blessing</span></span></h3>
+        <p class="stage-essay" data-anim="fade" data-delay="150">まるく、やわらかく。<br>日々の暮らしに、そっと福を。</p>
+        <p class="stage-price" data-anim="fade" data-delay="250">¥42,000 <span class="stock ok">販売中</span></p>
+        <a class="stage-link" href="#contact" data-shop-link data-anim="fade" data-delay="350" data-cursor>この作品について問い合わせる<i>→</i></a>
       </div>
     </article>
   </section>
 
-  <!-- ===== Motion ===== -->
-  <section class="motion" id="motion">
-    <header class="sec-head light reveal">
-      <p class="sec-no">二</p>
-      <h2 class="sec-title">動<span>Ink in Motion</span></h2>
-      <p class="sec-desc">書は、止まった瞬間の舞踏。<br>ならば、その一瞬の前後を観てみたい。——墨が動き出す、新しい書の体験。</p>
-    </header>
-    <div class="motion-grid">
-      <figure class="motion-item reveal">
-        <video src="assets/video/mai.mp4" poster="assets/img/works/mai.jpg" muted loop playsinline preload="metadata"></video>
-        <figcaption><strong>舞</strong>Dance — 墨が風をまとう</figcaption>
-      </figure>
-      <figure class="motion-item reveal">
-        <video src="assets/video/enso.mp4" poster="assets/img/works/enso.jpg" muted loop playsinline preload="metadata"></video>
-        <figcaption><strong>円相</strong>Ensō — 円は、呼吸する</figcaption>
-      </figure>
-      <figure class="motion-item reveal">
-        <video src="assets/video/kansha.mp4" poster="assets/img/works/kansha-50.jpg" muted loop playsinline preload="metadata"></video>
-        <figcaption><strong>感謝</strong>Thank you — 想いが、立ちのぼる</figcaption>
-      </figure>
-    </div>
-    <p class="motion-note reveal">※ 作品写真をもとに生成した映像表現です。実物の作品は静止した書作品です。</p>
-  </section>
-
   <!-- ===== Collection ===== -->
   <section class="collection" id="collection">
-    <header class="sec-head reveal">
-      <p class="sec-no">三</p>
-      <h2 class="sec-title">作品一覧<span>Collection</span></h2>
-      <p class="sec-desc">これまでの作品より。完売作品も、オーダーメイドでのご相談を承ります。</p>
+    <header class="sec-head">
+      <p class="sec-label" data-anim="fade"><span class="sec-index">02</span><span class="sec-rule"></span><span class="sec-en">Collection</span></p>
+      <h2 class="sec-title" data-anim="lines"><span class="line">作品一覧</span></h2>
+      <p class="sec-desc" data-anim="fade" data-delay="200">これまでの作品より。完売作品も、オーダーメイドでのご相談を承ります。</p>
     </header>
     <div class="col-grid">
-      <a class="col-item reveal zoomable" href="assets/img/works/tsuki-frame.jpg" data-title="月 — moon" data-price="¥45,000" data-note="額装 / Frame">
-        <img src="assets/img/works/tsuki-frame.jpg" alt="月 moon" loading="lazy"><span class="ci-name">月<em>moon</em></span><span class="ci-price">¥45,000</span>
+      <a class="col-item zoomable" href="assets/img/works/tsuki-frame.jpg" data-title="月 — moon" data-price="¥45,000" data-note="額装 / Frame" data-anim="up" data-cursor="view">
+        <figure><img src="assets/img/works/tsuki-frame.jpg" alt="月 moon" loading="lazy"><span class="ci-view">作品を見る</span></figure>
+        <div class="ci-meta"><h3>月<em>moon</em></h3><p class="ci-price">¥45,000</p></div>
       </a>
-      <a class="col-item reveal zoomable" href="assets/img/works/hikari.jpg" data-title="ひかり — Glow" data-price="¥45,000" data-note="パネル / Panel">
-        <img src="assets/img/works/hikari.jpg" alt="ひかり Glow" loading="lazy"><span class="ci-name">ひかり<em>Glow</em></span><span class="ci-price">¥45,000</span>
+      <a class="col-item zoomable" href="assets/img/works/hikari.jpg" data-title="ひかり — Glow" data-price="¥45,000" data-note="パネル / Panel" data-anim="up" data-cursor="view">
+        <figure><img src="assets/img/works/hikari.jpg" alt="ひかり Glow" loading="lazy"><span class="ci-view">作品を見る</span></figure>
+        <div class="ci-meta"><h3>ひかり<em>Glow</em></h3><p class="ci-price">¥45,000</p></div>
       </a>
-      <a class="col-item reveal zoomable" href="assets/img/works/umi-spring.jpg" data-title="海 — sea" data-price="¥45,000" data-note="パネル / Panel">
-        <img src="assets/img/works/umi-spring.jpg" alt="海 sea" loading="lazy"><span class="ci-name">海<em>sea</em></span><span class="ci-price">¥45,000</span>
+      <a class="col-item zoomable" href="assets/img/works/umi-spring.jpg" data-title="海 — sea" data-price="¥45,000" data-note="パネル / Panel" data-anim="up" data-cursor="view">
+        <figure><img src="assets/img/works/umi-spring.jpg" alt="海 sea" loading="lazy"><span class="ci-view">作品を見る</span></figure>
+        <div class="ci-meta"><h3>海<em>sea</em></h3><p class="ci-price">¥45,000</p></div>
       </a>
-      <a class="col-item reveal zoomable" href="assets/img/works/mai.jpg" data-title="舞 — Dance" data-price="¥42,000" data-note="額装 / Frame">
-        <img src="assets/img/works/mai.jpg" alt="舞 Dance" loading="lazy"><span class="ci-name">舞<em>Dance</em></span><span class="ci-price">¥42,000</span>
+      <a class="col-item zoomable" href="assets/img/works/mai.jpg" data-title="舞 — Dance" data-price="¥42,000" data-note="額装 / Frame" data-anim="up" data-cursor="view">
+        <figure><img src="assets/img/works/mai.jpg" alt="舞 Dance" loading="lazy"><span class="ci-view">作品を見る</span></figure>
+        <div class="ci-meta"><h3>舞<em>Dance</em></h3><p class="ci-price">¥42,000</p></div>
       </a>
-      <a class="col-item reveal zoomable" href="assets/img/works/fuku.jpg" data-title="福 — Blessing" data-price="¥42,000" data-note="額装 / Frame">
-        <img src="assets/img/works/fuku.jpg" alt="福 Blessing" loading="lazy"><span class="ci-name">福<em>Blessing</em></span><span class="ci-price">¥42,000</span>
+      <a class="col-item zoomable" href="assets/img/works/fuku.jpg" data-title="福 — Blessing" data-price="¥42,000" data-note="額装 / Frame" data-anim="up" data-cursor="view">
+        <figure><img src="assets/img/works/fuku.jpg" alt="福 Blessing" loading="lazy"><span class="ci-view">作品を見る</span></figure>
+        <div class="ci-meta"><h3>福<em>Blessing</em></h3><p class="ci-price">¥42,000</p></div>
       </a>
-      <a class="col-item sold reveal zoomable" href="assets/img/works/mai-black.jpg" data-title="舞 — Dance" data-price="¥42,000 / 完売" data-note="額装 / Frame">
-        <img src="assets/img/works/mai-black.jpg" alt="舞 Dance 黒額" loading="lazy"><span class="ci-name">舞<em>Dance</em></span><span class="ci-price">¥42,000</span>
+      <a class="col-item sold zoomable" href="assets/img/works/mai-black.jpg" data-title="舞 — Dance" data-price="¥42,000 / 完売" data-note="額装 / Frame" data-anim="up" data-cursor="view">
+        <figure><img src="assets/img/works/mai-black.jpg" alt="舞 Dance 黒額" loading="lazy"><span class="ci-view">作品を見る</span><span class="ci-badge">完売</span></figure>
+        <div class="ci-meta"><h3>舞<em>Dance</em></h3><p class="ci-price">¥42,000</p></div>
       </a>
-      <a class="col-item sold reveal zoomable" href="assets/img/works/fuku-2.jpg" data-title="福 — Blessing" data-price="¥42,000 / 完売" data-note="額装 / Frame">
-        <img src="assets/img/works/fuku-2.jpg" alt="福 Blessing" loading="lazy"><span class="ci-name">福<em>Blessing</em></span><span class="ci-price">¥42,000</span>
+      <a class="col-item sold zoomable" href="assets/img/works/fuku-2.jpg" data-title="福 — Blessing" data-price="¥42,000 / 完売" data-note="額装 / Frame" data-anim="up" data-cursor="view">
+        <figure><img src="assets/img/works/fuku-2.jpg" alt="福 Blessing" loading="lazy"><span class="ci-view">作品を見る</span><span class="ci-badge">完売</span></figure>
+        <div class="ci-meta"><h3>福<em>Blessing</em></h3><p class="ci-price">¥42,000</p></div>
       </a>
-      <a class="col-item sold reveal zoomable" href="assets/img/works/bi.jpg" data-title="美 — Beauty" data-price="¥42,000 / 完売" data-note="額装 / Frame">
-        <img src="assets/img/works/bi.jpg" alt="美 Beauty" loading="lazy"><span class="ci-name">美<em>Beauty</em></span><span class="ci-price">¥42,000</span>
+      <a class="col-item sold zoomable" href="assets/img/works/bi.jpg" data-title="美 — Beauty" data-price="¥42,000 / 完売" data-note="額装 / Frame" data-anim="up" data-cursor="view">
+        <figure><img src="assets/img/works/bi.jpg" alt="美 Beauty" loading="lazy"><span class="ci-view">作品を見る</span><span class="ci-badge">完売</span></figure>
+        <div class="ci-meta"><h3>美<em>Beauty</em></h3><p class="ci-price">¥42,000</p></div>
       </a>
-      <a class="col-item sold reveal zoomable" href="assets/img/works/hokori.jpg" data-title="誇 — Pride" data-price="¥42,000 / 完売" data-note="額装 / Frame">
-        <img src="assets/img/works/hokori.jpg" alt="誇 Pride" loading="lazy"><span class="ci-name">誇<em>Pride</em></span><span class="ci-price">¥42,000</span>
+      <a class="col-item sold zoomable" href="assets/img/works/hokori.jpg" data-title="誇 — Pride" data-price="¥42,000 / 完売" data-note="額装 / Frame" data-anim="up" data-cursor="view">
+        <figure><img src="assets/img/works/hokori.jpg" alt="誇 Pride" loading="lazy"><span class="ci-view">作品を見る</span><span class="ci-badge">完売</span></figure>
+        <div class="ci-meta"><h3>誇<em>Pride</em></h3><p class="ci-price">¥42,000</p></div>
       </a>
-      <a class="col-item sold reveal zoomable" href="assets/img/works/kansha-48.jpg" data-title="感謝 — Thank you" data-price="¥48,000 / 完売" data-note="額装 / Frame">
-        <img src="assets/img/works/kansha-48.jpg" alt="感謝 Thank you" loading="lazy"><span class="ci-name">感謝<em>Thank you</em></span><span class="ci-price">¥48,000</span>
+      <a class="col-item sold zoomable" href="assets/img/works/kansha-48.jpg" data-title="感謝 — Thank you" data-price="¥48,000 / 完売" data-note="額装 / Frame" data-anim="up" data-cursor="view">
+        <figure><img src="assets/img/works/kansha-48.jpg" alt="感謝 Thank you" loading="lazy"><span class="ci-view">作品を見る</span><span class="ci-badge">完売</span></figure>
+        <div class="ci-meta"><h3>感謝<em>Thank you</em></h3><p class="ci-price">¥48,000</p></div>
       </a>
-      <a class="col-item sold reveal zoomable" href="assets/img/works/kansha-50.jpg" data-title="感謝 — Thank you" data-price="¥50,000 / 完売" data-note="額装 / Frame">
-        <img src="assets/img/works/kansha-50.jpg" alt="感謝 Thank you" loading="lazy"><span class="ci-name">感謝<em>Thank you</em></span><span class="ci-price">¥50,000</span>
+      <a class="col-item sold zoomable" href="assets/img/works/kansha-50.jpg" data-title="感謝 — Thank you" data-price="¥50,000 / 完売" data-note="額装 / Frame" data-anim="up" data-cursor="view">
+        <figure><img src="assets/img/works/kansha-50.jpg" alt="感謝 Thank you" loading="lazy"><span class="ci-view">作品を見る</span><span class="ci-badge">完売</span></figure>
+        <div class="ci-meta"><h3>感謝<em>Thank you</em></h3><p class="ci-price">¥50,000</p></div>
       </a>
-      <a class="col-item sold reveal zoomable" href="assets/img/works/umi.jpg" data-title="海 — sea" data-price="¥42,000 / 完売" data-note="額装 / Frame">
-        <img src="assets/img/works/umi.jpg" alt="海 sea" loading="lazy"><span class="ci-name">海<em>sea</em></span><span class="ci-price">¥42,000</span>
+      <a class="col-item sold zoomable" href="assets/img/works/umi.jpg" data-title="海 — sea" data-price="¥42,000 / 完売" data-note="額装 / Frame" data-anim="up" data-cursor="view">
+        <figure><img src="assets/img/works/umi.jpg" alt="海 sea" loading="lazy"><span class="ci-view">作品を見る</span><span class="ci-badge">完売</span></figure>
+        <div class="ci-meta"><h3>海<em>sea</em></h3><p class="ci-price">¥42,000</p></div>
       </a>
-      <a class="col-item sold reveal zoomable" href="assets/img/works/enso.jpg" data-title="円相 — Ensō" data-price="¥42,000 / 完売" data-note="額装 / Frame">
-        <img src="assets/img/works/enso.jpg" alt="円相 Ensō" loading="lazy"><span class="ci-name">円相<em>Ensō</em></span><span class="ci-price">¥42,000</span>
+      <a class="col-item sold zoomable" href="assets/img/works/enso.jpg" data-title="円相 — Ensō" data-price="¥42,000 / 完売" data-note="額装 / Frame" data-anim="up" data-cursor="view">
+        <figure><img src="assets/img/works/enso.jpg" alt="円相 Ensō" loading="lazy"><span class="ci-view">作品を見る</span><span class="ci-badge">完売</span></figure>
+        <div class="ci-meta"><h3>円相<em>Ensō</em></h3><p class="ci-price">¥42,000</p></div>
       </a>
-      <a class="col-item sold reveal zoomable" href="assets/img/works/enso-black.jpg" data-title="円相 — Ensō" data-price="¥42,000 / 完売" data-note="額装 / Frame">
-        <img src="assets/img/works/enso-black.jpg" alt="円相 Ensō 黒額" loading="lazy"><span class="ci-name">円相<em>Ensō</em></span><span class="ci-price">¥42,000</span>
+      <a class="col-item sold zoomable" href="assets/img/works/enso-black.jpg" data-title="円相 — Ensō" data-price="¥42,000 / 完売" data-note="額装 / Frame" data-anim="up" data-cursor="view">
+        <figure><img src="assets/img/works/enso-black.jpg" alt="円相 Ensō 黒額" loading="lazy"><span class="ci-view">作品を見る</span><span class="ci-badge">完売</span></figure>
+        <div class="ci-meta"><h3>円相<em>Ensō</em></h3><p class="ci-price">¥42,000</p></div>
       </a>
-      <a class="col-item sold reveal zoomable" href="assets/img/works/arigato.jpg" data-title="ありがとう — thank you" data-price="¥46,000 / 完売" data-note="パネル / Panel">
-        <img src="assets/img/works/arigato.jpg" alt="ありがとう thank you" loading="lazy"><span class="ci-name">ありがとう<em>thank you</em></span><span class="ci-price">¥46,000</span>
+      <a class="col-item sold zoomable" href="assets/img/works/arigato.jpg" data-title="ありがとう — thank you" data-price="¥46,000 / 完売" data-note="パネル / Panel" data-anim="up" data-cursor="view">
+        <figure><img src="assets/img/works/arigato.jpg" alt="ありがとう thank you" loading="lazy"><span class="ci-view">作品を見る</span><span class="ci-badge">完売</span></figure>
+        <div class="ci-meta"><h3>ありがとう<em>thank you</em></h3><p class="ci-price">¥46,000</p></div>
       </a>
-      <a class="col-item sold reveal zoomable" href="assets/img/works/magokoro.jpg" data-title="真ごころ — Sincerity" data-price="¥43,000 / 完売" data-note="パネル / Panel">
-        <img src="assets/img/works/magokoro.jpg" alt="真ごころ Sincerity" loading="lazy"><span class="ci-name">真ごころ<em>Sincerity</em></span><span class="ci-price">¥43,000</span>
+      <a class="col-item sold zoomable" href="assets/img/works/magokoro.jpg" data-title="真ごころ — Sincerity" data-price="¥43,000 / 完売" data-note="パネル / Panel" data-anim="up" data-cursor="view">
+        <figure><img src="assets/img/works/magokoro.jpg" alt="真ごころ Sincerity" loading="lazy"><span class="ci-view">作品を見る</span><span class="ci-badge">完売</span></figure>
+        <div class="ci-meta"><h3>真ごころ<em>Sincerity</em></h3><p class="ci-price">¥43,000</p></div>
       </a>
-      <a class="col-item sold reveal zoomable" href="assets/img/works/inochi.jpg" data-title="いのち — Life" data-price="¥42,000 / 完売" data-note="パネル / Panel">
-        <img src="assets/img/works/inochi.jpg" alt="いのち Life" loading="lazy"><span class="ci-name">いのち<em>Life</em></span><span class="ci-price">¥42,000</span>
+      <a class="col-item sold zoomable" href="assets/img/works/inochi.jpg" data-title="いのち — Life" data-price="¥42,000 / 完売" data-note="パネル / Panel" data-anim="up" data-cursor="view">
+        <figure><img src="assets/img/works/inochi.jpg" alt="いのち Life" loading="lazy"><span class="ci-view">作品を見る</span><span class="ci-badge">完売</span></figure>
+        <div class="ci-meta"><h3>いのち<em>Life</em></h3><p class="ci-price">¥42,000</p></div>
       </a>
-      <a class="col-item sold reveal zoomable" href="assets/img/works/tsuki-crescent.jpg" data-title="月 — moon" data-price="¥45,000 / 完売" data-note="額装 / Frame">
-        <img src="assets/img/works/tsuki-crescent.jpg" alt="月 moon 三日月" loading="lazy"><span class="ci-name">月<em>moon</em></span><span class="ci-price">¥45,000</span>
+      <a class="col-item sold zoomable" href="assets/img/works/tsuki-crescent.jpg" data-title="月 — moon" data-price="¥45,000 / 完売" data-note="額装 / Frame" data-anim="up" data-cursor="view">
+        <figure><img src="assets/img/works/tsuki-crescent.jpg" alt="月 moon 三日月" loading="lazy"><span class="ci-view">作品を見る</span><span class="ci-badge">完売</span></figure>
+        <div class="ci-meta"><h3>月<em>moon</em></h3><p class="ci-price">¥45,000</p></div>
       </a>
     </div>
-    <p class="col-cats reveal">Frame ／ Panel ／ Original Calendar ／ 福ダルマ</p>
+    <p class="col-cats" data-anim="fade">Frame ／ Panel ／ Original Calendar ／ 福ダルマ</p>
   </section>
 
   <!-- ===== Order ===== -->
   <section class="order" id="order">
-    <header class="sec-head reveal">
-      <p class="sec-no">四</p>
-      <h2 class="sec-title">誂えの書<span>Custom Order</span></h2>
-      <p class="sec-desc">世界にひとつ、あなたのための一筆を。</p>
+    <header class="sec-head">
+      <p class="sec-label" data-anim="fade"><span class="sec-index">03</span><span class="sec-rule"></span><span class="sec-en">Commission</span></p>
+      <h2 class="sec-title" data-anim="lines"><span class="line">誂えの書</span></h2>
+      <p class="sec-desc" data-anim="fade" data-delay="200">世界にひとつ、あなたのための一筆を。</p>
     </header>
     <div class="order-grid">
-      <div class="order-card reveal">
+      <div class="order-card" data-anim="up" data-cursor>
         <span class="oc-kanji" aria-hidden="true">書</span>
         <h3>オーダーメイド作品</h3>
         <p>大切な言葉、座右の銘、贈りたい想い。ご希望の文字を、額装・パネル作品に仕立ててお届けします。</p>
+        <span class="oc-arrow" aria-hidden="true">→</span>
       </div>
-      <div class="order-card reveal">
+      <div class="order-card" data-anim="up" data-delay="120" data-cursor>
         <span class="oc-kanji" aria-hidden="true">名</span>
         <h3>命名書</h3>
         <p>お子さまの誕生に、祝福の一筆を。名に込められた願いを、美しいかたちで残します。</p>
+        <span class="oc-arrow" aria-hidden="true">→</span>
       </div>
-      <div class="order-card reveal">
+      <div class="order-card" data-anim="up" data-delay="240" data-cursor>
         <span class="oc-kanji" aria-hidden="true">号</span>
         <h3>屋号・ロゴ揮毫</h3>
         <p>店名・ブランドロゴ・題字。手書きの書は、他にない「顔」になります。法人・店舗のご依頼も承ります。</p>
+        <span class="oc-arrow" aria-hidden="true">→</span>
       </div>
     </div>
-    <div class="order-cta reveal">
-      <a class="btn-primary" href="#contact">制作のご相談<i>→</i></a>
+    <div class="order-cta" data-anim="fade" data-delay="300">
+      <a class="btn-primary" href="#contact" data-magnetic data-cursor>制作のご相談<i>→</i></a>
     </div>
   </section>
 
   <!-- ===== About ===== -->
   <section class="about" id="about">
-    <figure class="about-fig reveal">
-      <img src="assets/img/hero.jpg" alt="制作中の衛藤仁胡" loading="lazy">
+    <figure class="about-fig" data-anim="wipe">
+      <img src="assets/img/hero.jpg" alt="制作中の衛藤仁胡" loading="lazy" data-parallax="0.06">
     </figure>
-    <div class="about-body reveal">
-      <p class="about-label">About the Artist</p>
-      <h2 class="about-name">衛藤仁胡<span>Eto Niko</span></h2>
-      <p class="about-text">
+    <div class="about-body">
+      <p class="sec-label" data-anim="fade"><span class="sec-index">04</span><span class="sec-rule"></span><span class="sec-en">About</span></p>
+      <h2 class="about-name" data-anim="lines"><span class="line">衛藤仁胡<span>Eto Niko</span></span></h2>
+      <p class="about-text" data-anim="fade" data-delay="200">
         書道家。文字の美を追求し、独自の表現へと昇華させた書をお届けしています。<br><br>
         古典に学んだ確かな筆致と、余白を生かした現代的な構成。一つひとつの文字に宿る意味と呼吸を大切に、暮らしの中に静かに寄り添う作品を制作しています。<br><br>
         オーダーメイド作品や命名書、屋号の制作も承っております。
@@ -303,12 +307,13 @@
 
   <!-- ===== Contact ===== -->
   <section class="contact" id="contact">
-    <div class="contact-inner reveal">
-      <h2 class="contact-title">便り<span>Contact</span></h2>
-      <p class="contact-text">作品のご購入・オーダーメイドのご相談は、<br>Instagram のダイレクトメッセージ、またはオンラインショップよりお気軽にどうぞ。</p>
-      <div class="contact-btns">
-        <a class="btn-primary" href="#" data-instagram-link>Instagram でご相談<i>→</i></a>
-        <a class="btn-ghost" href="#" data-shop-link>オンラインショップへ<i>→</i></a>
+    <div class="contact-inner">
+      <p class="sec-label center" data-anim="fade"><span class="sec-index">05</span><span class="sec-rule"></span><span class="sec-en">Contact</span></p>
+      <h2 class="contact-title" data-anim="lines"><span class="line">便り</span></h2>
+      <p class="contact-text" data-anim="fade" data-delay="150">作品のご購入・オーダーメイドのご相談は、<br>Instagram のダイレクトメッセージ、またはオンラインショップよりお気軽にどうぞ。</p>
+      <div class="contact-btns" data-anim="fade" data-delay="300">
+        <a class="btn-primary" href="#" data-instagram-link data-magnetic data-cursor>Instagram でご相談<i>→</i></a>
+        <a class="btn-ghost" href="#" data-shop-link data-magnetic data-cursor>オンラインショップへ<i>→</i></a>
       </div>
     </div>
   </section>
@@ -325,7 +330,7 @@
 
 <!-- ===== Lightbox ===== -->
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="作品拡大表示" hidden>
-  <button class="lb-close" id="lbClose" aria-label="閉じる">×</button>
+  <button class="lb-close" id="lbClose" aria-label="閉じる" data-cursor>×</button>
   <figure class="lb-fig">
     <img id="lbImg" src="" alt="">
     <figcaption class="lb-cap">
