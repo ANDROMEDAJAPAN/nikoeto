@@ -1,0 +1,63 @@
+name: Fetch video assets
+
+# 生成済み動画(外部CDN)をリポジトリに取り込むための手動ワークフロー。
+# このリポジトリのコンテナ環境からは当該CDNへ直接アクセスできないため、
+# GitHub Actions ランナー経由でダウンロード・圧縮・コミットする。
+
+on:
+  workflow_dispatch:
+    inputs:
+      url_mai:
+        description: "URL for assets/video/mai.mp4"
+        required: true
+      url_enso:
+        description: "URL for assets/video/enso.mp4"
+        required: true
+      url_kansha:
+        description: "URL for assets/video/kansha.mp4"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download and compress videos
+        run: |
+          set -eu
+          mkdir -p assets/video preview
+          curl -fsSL -o /tmp/mai.mp4    "${{ github.event.inputs.url_mai }}"
+          curl -fsSL -o /tmp/enso.mp4   "${{ github.event.inputs.url_enso }}"
+          curl -fsSL -o /tmp/kansha.mp4 "${{ github.event.inputs.url_kansha }}"
+          for name in mai enso kansha; do
+            ffmpeg -y -loglevel error -i "/tmp/${name}.mp4" \
+              -vf "scale=720:-2" -c:v libx264 -preset slow -crf 26 \
+              -pix_fmt yuv420p -movflags +faststart -an \
+              "assets/video/${name}.mp4"
+          done
+          # 確認用フレームモンタージュ(各動画から3フレーム)
+          for name in mai enso kansha; do
+            for t in 0.2 2.4 4.6; do
+              ffmpeg -y -loglevel error -ss "$t" -i "assets/video/${name}.mp4" \
+                -frames:v 1 -vf scale=240:-2 "/tmp/f_${name}_${t}.jpg"
+            done
+          done
+          ffmpeg -y -loglevel error \
+            -i /tmp/f_mai_0.2.jpg -i /tmp/f_mai_2.4.jpg -i /tmp/f_mai_4.6.jpg \
+            -i /tmp/f_enso_0.2.jpg -i /tmp/f_enso_2.4.jpg -i /tmp/f_enso_4.6.jpg \
+            -i /tmp/f_kansha_0.2.jpg -i /tmp/f_kansha_2.4.jpg -i /tmp/f_kansha_4.6.jpg \
+            -filter_complex "[0][1][2]hstack=3[r0];[3][4][5]hstack=3[r1];[6][7][8]hstack=3[r2];[r0][r1][r2]vstack=3" \
+            -q:v 4 preview/video-frames.jpg
+          ls -la assets/video preview
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/video preview
+          git commit -m "Add ink-motion videos (compressed for web)"
+          git push
