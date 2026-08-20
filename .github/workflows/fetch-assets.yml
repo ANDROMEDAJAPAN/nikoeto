@@ -1,21 +1,14 @@
 name: Fetch video assets
 
-# 生成済み動画(外部CDN)をリポジトリに取り込むための手動ワークフロー。
+# 生成済み動画(外部CDN)をリポジトリに取り込むワークフロー。
 # このリポジトリのコンテナ環境からは当該CDNへ直接アクセスできないため、
 # GitHub Actions ランナー経由でダウンロード・圧縮・コミットする。
+# .github/video-sources.json を更新してpushすると実行される。
 
 on:
-  workflow_dispatch:
-    inputs:
-      url_mai:
-        description: "URL for assets/video/mai.mp4"
-        required: true
-      url_enso:
-        description: "URL for assets/video/enso.mp4"
-        required: true
-      url_kansha:
-        description: "URL for assets/video/kansha.mp4"
-        required: true
+  push:
+    paths:
+      - ".github/video-sources.json"
 
 permissions:
   contents: write
@@ -30,10 +23,9 @@ jobs:
         run: |
           set -eu
           mkdir -p assets/video preview
-          curl -fsSL -o /tmp/mai.mp4    "${{ github.event.inputs.url_mai }}"
-          curl -fsSL -o /tmp/enso.mp4   "${{ github.event.inputs.url_enso }}"
-          curl -fsSL -o /tmp/kansha.mp4 "${{ github.event.inputs.url_kansha }}"
           for name in mai enso kansha; do
+            url=$(jq -r ".${name}" .github/video-sources.json)
+            curl -fsSL -o "/tmp/${name}.mp4" "$url"
             ffmpeg -y -loglevel error -i "/tmp/${name}.mp4" \
               -vf "scale=720:-2" -c:v libx264 -preset slow -crf 26 \
               -pix_fmt yuv420p -movflags +faststart -an \
