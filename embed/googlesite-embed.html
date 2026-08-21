@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<!--
+  Google Sites 埋め込み用 単一HTML(自動生成: scripts/build_embed.py)
+  Google サイト編集画面 → 挿入 → 埋め込む → 「埋め込みコード」にこのファイルの中身を全て貼り付け。
+  挿入後、埋め込みブロックを全幅に広げ、高さを十分に(目安 900px 以上)確保してください。
+-->
+
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>衛藤仁胡 | Eto Niko — 書家</title>
+<meta name="description" content="書家・衛藤仁胡（Eto Niko）の公式サイト。文字の美を追求し、独自の表現へと昇華させた書作品。額装・パネル作品の販売、オーダーメイド作品・命名書・屋号やロゴの制作も承ります。">
+<meta property="og:title" content="衛藤仁胡 | Eto Niko — 書家">
+<meta property="og:description" content="文字の美を追求し、独自の表現へと昇華させた書。一点一点、いのちを宿す作品たち。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/img/works/mai.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='38' fill='none' stroke='%231c1a17' stroke-width='9' stroke-linecap='round' stroke-dasharray='215 24' transform='rotate(-70 50 50)'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;800&family=Zen+Kaku+Gothic+New:wght@300;400;500&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   衛藤仁胡 | Eto Niko — 書家
+   Concept: 動と静 (Motion & Stillness)
+   ========================================================= */
+
+:root{
+  --paper:      #f7f5f1;
+  --paper-deep: #efece5;
+  --wall:       #e7e6ea;
+  --ink:        #1c1a17;
+  --ink-soft:   #5c5850;
+  --ink-faint:  #9b968c;
+  --shu:        #a83c2b;
+  --line:       rgba(28,26,23,.12);
+  --serif: "Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif;
+  --sans:  "Zen Kaku Gothic New","Hiragino Kaku Gothic ProN",sans-serif;
+  --latin: "EB Garamond",serif;
+  --ease:      cubic-bezier(.22,.8,.24,1);
+  --ease-out:  cubic-bezier(.16,1,.3,1);
+  --ease-soft: cubic-bezier(.45,.05,.25,1);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--serif);
+  font-feature-settings:"palt" 1;
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.9;
+  letter-spacing:.06em;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--ink);color:var(--paper)}
+
+/* 和紙テクスチャ(生成素材)を全面にごく薄く敷く */
+body::before{
+  content:"";position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:url("https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/textures/washi.jpg") repeat;
+  background-size:720px;
+  opacity:.16;mix-blend-mode:multiply;
+}
+main,header,footer{position:relative;z-index:2}
+
+/* 静モード / reduced motion */
+body.still *,
+body.still *::before,
+body.still *::after{
+  animation-play-state:paused !important;
+  transition:none !important;
+}
+body.still [data-anim]{opacity:1 !important;transform:none !important;clip-path:none !important;filter:none !important}
+body.still [data-anim] .line{transform:none !important;opacity:1 !important}
+body.still .char{transform:none !important;opacity:1 !important;filter:none !important}
+body.still .cursor{display:none !important}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none !important;transition:none !important}
+  [data-anim],[data-anim] .line,.char{opacity:1 !important;transform:none !important;clip-path:none !important;filter:none !important}
+  .cursor{display:none !important}
+}
+
+/* =========================================================
+   Loading sequence
+   ========================================================= */
+.veil{
+  position:fixed;inset:0;z-index:100;
+  background:var(--paper);
+  display:grid;place-items:center;
+  transition:opacity 1s var(--ease-soft), visibility 1s;
+}
+.veil.off{opacity:0;visibility:hidden}
+.veil-inner{display:flex;flex-direction:column;align-items:center;gap:.6rem}
+.veil-enso{width:84px;height:84px;margin-bottom:.6rem}
+.veil-enso circle{
+  fill:none;stroke:var(--ink);stroke-width:6.5;stroke-linecap:round;
+  stroke-dasharray:100;stroke-dashoffset:100;
+  transform:rotate(-80deg);transform-origin:center;
+  animation:ensoDraw 1.5s var(--ease-out) forwards .1s;
+}
+.veil-name{
+  font-size:1.15rem;letter-spacing:.5em;text-indent:.5em;font-weight:500;
+  opacity:0;animation:veilFade .9s var(--ease-out) forwards .8s;
+}
+.veil-en{
+  font-family:var(--latin);font-size:.68rem;letter-spacing:.42em;text-indent:.42em;
+  text-transform:uppercase;color:var(--ink-faint);
+  opacity:0;animation:veilFade .9s var(--ease-out) forwards 1s;
+}
+@keyframes ensoDraw{to{stroke-dashoffset:12}}
+@keyframes veilFade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* =========================================================
+   Custom cursor
+   ========================================================= */
+.cursor{
+  position:fixed;z-index:99;left:0;top:0;
+  width:10px;height:10px;border-radius:50%;
+  background:var(--ink);
+  pointer-events:none;
+  transform:translate(-50%,-50%);
+  transition:width .35s var(--ease-out),height .35s var(--ease-out),
+             background .35s,opacity .3s;
+  display:grid;place-items:center;
+  opacity:0;
+  mix-blend-mode:multiply;
+}
+.cursor.on{opacity:.9}
+.cursor.hover{width:44px;height:44px;background:rgba(28,26,23,.14)}
+.cursor.view{width:74px;height:74px;background:rgba(28,26,23,.85);mix-blend-mode:normal}
+.cursor-label{
+  font-family:var(--sans);font-size:.6rem;letter-spacing:.18em;color:var(--paper);
+  opacity:0;transform:scale(.6);transition:opacity .25s,transform .35s var(--ease-out);
+  white-space:nowrap;
+}
+.cursor.view .cursor-label{opacity:1;transform:none}
+@media (hover:none),(pointer:coarse){.cursor{display:none}}
+
+/* =========================================================
+   Entrance animation primitives
+   ========================================================= */
+[data-anim]{will-change:transform,opacity}
+[data-anim="fade"]{
+  opacity:0;transform:translateY(22px);filter:blur(6px);
+  transition:opacity 1.1s var(--ease-out),transform 1.1s var(--ease-out),filter 1.1s var(--ease-out);
+  transition-delay:var(--d,0ms);
+}
+[data-anim="fade"].in{opacity:1;transform:none;filter:blur(0)}
+
+[data-anim="up"]{
+  opacity:0;transform:translateY(44px);
+  transition:opacity 1s var(--ease-out),transform 1s var(--ease-out);
+  transition-delay:var(--d,0ms);
+}
+[data-anim="up"].in{opacity:1;transform:none}
+
+/* 画像: 幕が引かれるようなワイプ + わずかなスケール
+   ※クリップは子要素へ適用(自身を全クリップするとIntersectionObserverが発火しない) */
+[data-anim="wipe"] > *{
+  clip-path:inset(0 100% 0 0);
+  transition:clip-path 1.35s var(--ease-soft);
+  transition-delay:var(--d,0ms);
+  display:block;
+}
+[data-anim="wipe"] img{
+  transform:scale(1.12);
+  transition:transform 1.6s var(--ease-soft),box-shadow .8s var(--ease);
+  transition-delay:var(--d,0ms);
+}
+[data-anim="wipe"].in > *{clip-path:inset(0 0 0 0)}
+[data-anim="wipe"].in img{transform:scale(1)}
+
+/* 見出し: 行マスクからのせり上がり */
+[data-anim="lines"] .line{
+  display:block;overflow:hidden;
+}
+[data-anim="lines"] .line > .line-inner{
+  display:block;transform:translateY(112%);
+  transition:transform 1.15s var(--ease-out);
+}
+[data-anim="lines"].in .line > .line-inner{transform:none}
+[data-anim="lines"] .line:nth-child(2) > .line-inner{transition-delay:.1s}
+[data-anim="lines"] .line:nth-child(3) > .line-inner{transition-delay:.2s}
+
+/* ヒーロー題字: 一文字ずつ */
+.char{
+  display:inline-block;
+  opacity:0;transform:translateY(.35em) rotate(2deg);filter:blur(8px);
+  transition:opacity 1s var(--ease-out),transform 1.1s var(--ease-out),filter 1s var(--ease-out);
+}
+.chars-in .char{opacity:1;transform:none;filter:blur(0)}
+
+/* =========================================================
+   Header
+   ========================================================= */
+.site-header{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.1rem clamp(1.2rem,4vw,3rem);
+  transition:background .5s,box-shadow .5s,padding .5s,transform .6s var(--ease-out);
+}
+.site-header.scrolled{
+  background:rgba(247,245,241,.88);
+  backdrop-filter:blur(12px);
+  box-shadow:0 1px 0 var(--line);
+  padding:.7rem clamp(1.2rem,4vw,3rem);
+}
+.site-header.hidden{transform:translateY(-110%)}
+.brand{display:flex;align-items:baseline;gap:.7rem}
+.brand-ja{font-size:1.18rem;font-weight:600;letter-spacing:.28em}
+.brand-en{font-family:var(--latin);font-size:.8rem;letter-spacing:.22em;color:var(--ink-soft);text-transform:uppercase}
+.site-nav{display:flex;gap:clamp(1rem,2.4vw,2.2rem)}
+.site-nav a{
+  font-size:.92rem;letter-spacing:.18em;position:relative;
+  display:flex;flex-direction:column;align-items:center;line-height:1.3;
+  padding:.2rem 0;
+}
+.site-nav a small{
+  font-family:var(--latin);font-size:.6rem;letter-spacing:.24em;
+  color:var(--ink-faint);text-transform:uppercase;
+  transition:color .4s;
+}
+.site-nav a::after{
+  content:"";position:absolute;left:50%;bottom:-2px;width:0;height:1px;
+  background:var(--shu);transition:width .45s var(--ease-out),left .45s var(--ease-out);
+}
+.site-nav a:hover::after{width:100%;left:0}
+.site-nav a:hover small{color:var(--shu)}
+.header-tools{display:flex;align-items:center;gap:1rem}
+
+.motion-toggle{
+  font-family:var(--serif);cursor:pointer;
+  border:1px solid var(--line);border-radius:999px;
+  background:transparent;color:var(--ink);
+  display:flex;overflow:hidden;font-size:.85rem;letter-spacing:.1em;
+  transition:border-color .4s;
+}
+.motion-toggle:hover{border-color:var(--ink)}
+.motion-toggle span{padding:.28em .8em;transition:background .35s,color .35s}
+.motion-toggle .mt-dou{background:var(--ink);color:var(--paper)}
+body.still .motion-toggle .mt-dou{background:transparent;color:var(--ink)}
+body.still .motion-toggle .mt-sei{background:var(--ink);color:var(--paper)}
+
+.nav-burger{display:none;background:none;border:none;cursor:pointer;width:34px;height:26px;position:relative}
+.nav-burger span{position:absolute;left:4px;right:4px;height:1.5px;background:var(--ink);transition:.35s var(--ease)}
+.nav-burger span:first-child{top:8px}
+.nav-burger span:last-child{bottom:8px}
+.nav-open .nav-burger span:first-child{top:12px;transform:rotate(24deg)}
+.nav-open .nav-burger span:last-child{bottom:12px;transform:rotate(-24deg)}
+
+/* =========================================================
+   Hero
+   ========================================================= */
+.hero{
+  position:relative;min-height:100svh;
+  display:flex;align-items:center;
+  overflow:hidden;
+}
+.hero-photo{position:absolute;inset:-6% 0;z-index:0}
+.hero-photo::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(100deg,var(--paper) 0%,rgba(247,245,241,.86) 34%,rgba(247,245,241,.25) 62%,rgba(247,245,241,0) 100%);
+}
+.hero-photo img{
+  width:100%;height:100%;object-fit:cover;object-position:72% 40%;
+  animation:heroDrift 30s var(--ease-soft) infinite alternate;
+  filter:saturate(.92);
+}
+@keyframes heroDrift{
+  from{transform:scale(1.02) translateX(0)}
+  to{transform:scale(1.09) translateX(-1.4%)}
+}
+.hero-enso{
+  position:absolute;z-index:1;
+  width:min(46vw,560px);aspect-ratio:1;
+  right:clamp(-4rem,4vw,8rem);top:50%;transform:translateY(-50%);
+  opacity:.45;
+}
+.hero-enso circle{
+  fill:none;stroke:var(--ink);stroke-width:1.1;stroke-linecap:round;
+  stroke-dasharray:100;stroke-dashoffset:100;
+  transform:rotate(-80deg);transform-origin:center;
+  animation:ensoDraw 3s var(--ease-out) forwards 1.7s;
+}
+.hero-copy{
+  position:relative;z-index:2;
+  padding:0 clamp(1.4rem,7vw,7rem);
+  display:flex;gap:clamp(1.6rem,3.5vw,3.4rem);align-items:flex-start;
+}
+.tate{
+  writing-mode:vertical-rl;
+  font-size:clamp(1.25rem,2.4vw,1.8rem);
+  letter-spacing:.42em;font-weight:500;
+  border-right:1px solid var(--line);
+  padding-right:1.2rem;
+  height:26rem;max-height:70vh;
+}
+.tate-mask{
+  display:block;overflow:hidden;
+}
+.tate-mask{
+  clip-path:inset(-5% 0 100% 0);
+  animation:tateReveal 1.6s var(--ease-soft) forwards 1.5s;
+}
+@keyframes tateReveal{to{clip-path:inset(-5% 0 -5% 0)}}
+.hero-title{display:flex;flex-direction:column;gap:.6rem;margin-top:.4rem;position:relative}
+.hero-name{
+  font-size:clamp(2.9rem,7.5vw,5.6rem);
+  font-weight:600;letter-spacing:.24em;line-height:1.15;
+}
+.hero-name-en{
+  font-family:var(--latin);font-size:clamp(.8rem,1.3vw,1rem);
+  letter-spacing:.34em;text-transform:uppercase;color:var(--ink-soft);
+  opacity:0;animation:fadeUp 1.3s var(--ease-out) forwards 2s;
+}
+.hero-sub{
+  margin-top:1.6rem;font-size:clamp(.92rem,1.4vw,1.05rem);color:var(--ink-soft);
+  opacity:0;animation:fadeUp 1.3s var(--ease-out) forwards 2.25s;
+}
+/* 生成した墨の一筆(透過PNG) */
+.hero-stroke{
+  position:absolute;left:-8%;bottom:-12rem;
+  width:min(32rem,66%);
+  opacity:0;
+  animation:strokeIn 2.2s var(--ease-soft) forwards 2.5s;
+  pointer-events:none;
+}
+@keyframes strokeIn{
+  from{opacity:0;clip-path:inset(0 100% 0 0)}
+  to{opacity:.45;clip-path:inset(0 0 0 0)}
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+
+.scroll-cue{
+  position:absolute;z-index:2;bottom:2.2rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  font-family:var(--latin);font-size:.68rem;letter-spacing:.4em;text-transform:uppercase;color:var(--ink-soft);
+  opacity:0;animation:veilFade 1.2s var(--ease-out) forwards 2.8s;
+}
+.scroll-cue i{
+  width:1px;height:56px;background:var(--line);position:relative;overflow:hidden;display:block;
+}
+.scroll-cue i::after{
+  content:"";position:absolute;left:0;top:-40%;width:100%;height:40%;
+  background:var(--ink);animation:cueDrop 2.2s var(--ease-soft) infinite;
+}
+@keyframes cueDrop{to{top:110%}}
+
+/* =========================================================
+   Statement
+   ========================================================= */
+.statement{
+  position:relative;overflow:hidden;
+  padding:clamp(8rem,18vh,13rem) 1.5rem;
+  text-align:center;
+}
+.statement::before{
+  content:"";position:absolute;z-index:0;pointer-events:none;
+  right:-10%;top:-6%;
+  width:min(30rem,46vw);aspect-ratio:4/7;
+  background:url("https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/textures/inkwash.jpg") no-repeat center / cover;
+  mix-blend-mode:multiply;opacity:.4;
+  -webkit-mask-image:radial-gradient(closest-side,#000 38%,transparent 76%);
+  mask-image:radial-gradient(closest-side,#000 38%,transparent 76%);
+}
+.statement > *{position:relative;z-index:1}
+.statement-text{
+  font-size:clamp(1.05rem,2vw,1.45rem);
+  letter-spacing:.14em;line-height:2.6;
+}
+.statement-seal{
+  display:inline-flex;align-items:center;justify-content:center;
+  margin-top:3.2rem;
+  width:3rem;height:3rem;
+  border:1.5px solid var(--shu);color:var(--shu);
+  font-size:.92rem;letter-spacing:.06em;text-indent:.06em;line-height:1;
+  border-radius:5px;
+  transform:rotate(-3deg);
+  transition:transform .5s var(--ease-out),box-shadow .5s;
+}
+.statement-seal:hover{transform:rotate(0deg) scale(1.06);box-shadow:0 10px 24px -12px rgba(168,60,43,.5)}
+
+/* =========================================================
+   Section heads
+   ========================================================= */
+.sec-head{
+  max-width:1200px;margin:0 auto;
+  padding:0 clamp(1.4rem,5vw,4rem) clamp(3rem,7vh,5rem);
+}
+.sec-label{
+  display:flex;align-items:center;gap:1rem;
+  margin-bottom:1.4rem;
+}
+.sec-label.center{justify-content:center}
+.sec-index{
+  font-family:var(--latin);font-size:.8rem;letter-spacing:.18em;color:var(--shu);
+  font-variant-numeric:lining-nums;
+}
+.sec-rule{
+  display:block;width:3.2rem;height:1px;background:var(--line);
+  position:relative;overflow:hidden;
+}
+.sec-rule::after{
+  content:"";position:absolute;inset:0;background:var(--shu);
+  transform:translateX(-101%);transition:transform 1.2s var(--ease-soft) .3s;
+}
+.sec-label.in .sec-rule::after{transform:none}
+.sec-en{
+  font-family:var(--latin);font-size:.78rem;letter-spacing:.4em;
+  text-transform:uppercase;color:var(--ink-faint);
+}
+.sec-title{
+  font-size:clamp(1.9rem,3.8vw,2.9rem);font-weight:600;letter-spacing:.26em;
+  line-height:1.3;
+}
+.sec-desc{color:var(--ink-soft);font-size:.98rem;margin-top:1.1rem}
+
+/* =========================================================
+   Works stages
+   ========================================================= */
+.works{padding:clamp(4rem,9vh,7rem) 0 3rem}
+.stage{
+  position:relative;
+  max-width:1200px;margin:0 auto clamp(7rem,16vh,11rem);
+  padding:0 clamp(1.4rem,5vw,4rem);
+  display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);
+  gap:clamp(2rem,5vw,5rem);align-items:center;
+}
+.stage.rev{grid-template-columns:minmax(0,5fr) minmax(0,7fr)}
+.stage.rev .stage-fig{order:2}
+.stage.rev .stage-info{order:1;text-align:right}
+.stage.rev .stage-info .stage-link{flex-direction:row-reverse}
+.stage::before{
+  content:attr(data-kanji);
+  position:absolute;z-index:0;
+  font-size:clamp(11rem,26vw,22rem);font-weight:800;
+  color:transparent;-webkit-text-stroke:1px rgba(28,26,23,.07);
+  top:50%;transform:translateY(calc(-54% + var(--ky,0px)));
+  pointer-events:none;user-select:none;line-height:1;
+  transition:transform .1s linear;
+}
+.stage:not(.rev)::before{right:clamp(0rem,3vw,2rem)}
+.stage.rev::before{left:clamp(0rem,3vw,2rem)}
+.stage-fig{position:relative;z-index:1;margin:0}
+.stage-fig a{
+  display:block;overflow:hidden;background:var(--wall);
+  box-shadow:0 24px 60px -30px rgba(28,26,23,.35);
+  transition:box-shadow .8s var(--ease),transform .8s var(--ease-out);
+  transform-style:preserve-3d;
+}
+.stage-fig img{
+  width:100%;height:auto;
+  transition:transform 1.4s var(--ease-out);
+  will-change:transform;
+}
+.stage-fig a:hover img{transform:scale(1.045)}
+.stage-fig a:hover{box-shadow:0 40px 80px -34px rgba(28,26,23,.5)}
+.stage-info{position:relative;z-index:1}
+.stage-cat{
+  font-family:var(--latin);font-size:.72rem;letter-spacing:.32em;
+  text-transform:uppercase;color:var(--shu);margin-bottom:1rem;
+}
+.stage-name{
+  font-size:clamp(2.6rem,5vw,4rem);font-weight:600;letter-spacing:.14em;line-height:1.25;
+}
+.stage-name-en{
+  font-family:var(--latin);font-size:1rem;font-weight:400;font-style:italic;
+  letter-spacing:.18em;color:var(--ink-faint);margin-left:1.1rem;
+}
+.stage-essay{margin:1.4rem 0 1.8rem;color:var(--ink-soft);font-size:.98rem;line-height:2.3}
+.stage-price{font-family:var(--latin);font-size:1.15rem;letter-spacing:.12em}
+.stock{
+  font-family:var(--sans);font-size:.68rem;letter-spacing:.22em;vertical-align:.18em;
+  padding:.24em .9em;margin-left:.9em;border-radius:999px;
+}
+.stock.ok{color:var(--shu);border:1px solid currentColor}
+.stage-link{
+  margin-top:2rem;display:inline-flex;align-items:center;gap:.7rem;
+  font-size:.9rem;letter-spacing:.2em;
+  position:relative;padding-bottom:.45rem;
+}
+.stage-link::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:1px;
+  background:var(--line);
+}
+.stage-link::before{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:1px;
+  background:var(--shu);transform:scaleX(0);transform-origin:right;
+  transition:transform .6s var(--ease-out);z-index:1;
+}
+.stage-link:hover::before{transform:scaleX(1);transform-origin:left}
+.stage-link i{font-style:normal;transition:transform .45s var(--ease-out)}
+.stage-link:hover i{transform:translateX(7px)}
+
+/* =========================================================
+   Collection — オンラインショップの佇まい
+   ========================================================= */
+.collection{padding:clamp(5rem,12vh,8rem) 0}
+.col-grid{
+  max-width:1200px;margin:0 auto;
+  padding:0 clamp(1.4rem,5vw,4rem);
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+  gap:clamp(1.6rem,3vw,2.4rem) clamp(1rem,2.6vw,2rem);
+}
+.col-item{display:block}
+.col-item figure{
+  position:relative;margin:0;overflow:hidden;background:var(--wall);
+}
+.col-item figure::after{
+  content:"";position:absolute;inset:0;
+  background:rgba(28,26,23,0);
+  transition:background .6s var(--ease);
+}
+.col-item img{
+  width:100%;aspect-ratio:4/5;object-fit:cover;
+  transition:transform 1.2s var(--ease-out);
+}
+.col-item:hover img{transform:scale(1.06)}
+.col-item:hover figure::after{background:rgba(28,26,23,.18)}
+.ci-badge{
+  position:absolute;top:.8rem;left:.9rem;z-index:1;
+  font-size:.64rem;letter-spacing:.3em;text-indent:.15em;padding:.3em .8em;
+  color:var(--paper);background:rgba(28,26,23,.72);border-radius:2px;
+  font-family:var(--sans);
+}
+.ci-meta{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:1rem .15rem 0;gap:.8rem;
+}
+.ci-meta h3{
+  font-size:.98rem;font-weight:500;letter-spacing:.14em;
+  display:flex;align-items:baseline;gap:.55rem;min-width:0;
+}
+.ci-meta h3 em{
+  font-family:var(--latin);font-style:italic;font-weight:400;
+  font-size:.72rem;letter-spacing:.1em;color:var(--ink-faint);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.ci-price{
+  font-family:var(--latin);font-size:.85rem;letter-spacing:.08em;color:var(--ink-soft);
+  flex-shrink:0;
+}
+.col-item.sold .ci-price{text-decoration:line-through;color:var(--ink-faint)}
+.col-item.sold img{filter:saturate(.85)}
+.col-cats{
+  max-width:1200px;margin:3.4rem auto 0;
+  padding:0 clamp(1.4rem,5vw,4rem);
+  font-family:var(--latin);font-size:.75rem;letter-spacing:.3em;color:var(--ink-faint);text-transform:uppercase;
+}
+
+/* =========================================================
+   Order
+   ========================================================= */
+.order{
+  background:var(--paper-deep);
+  padding:clamp(5rem,12vh,8rem) 0;
+  position:relative;overflow:hidden;
+}
+.order::before{
+  content:"";position:absolute;right:-6%;bottom:-14%;width:clamp(18rem,34vw,30rem);aspect-ratio:9/16;
+  background:url("https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/textures/inkwash.jpg") no-repeat center / cover;
+  mix-blend-mode:multiply;opacity:.35;pointer-events:none;
+  transform:scaleX(-1);
+  -webkit-mask-image:radial-gradient(closest-side,#000 36%,transparent 74%);
+  mask-image:radial-gradient(closest-side,#000 36%,transparent 74%);
+}
+.order-grid{
+  max-width:1200px;margin:0 auto;
+  padding:0 clamp(1.4rem,5vw,4rem);
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:clamp(1.2rem,3vw,2.4rem);
+  position:relative;z-index:1;
+}
+.order-card{
+  position:relative;overflow:hidden;
+  background:var(--paper);border:1px solid var(--line);
+  padding:2.6rem 2rem 2.6rem;
+  transition:transform .6s var(--ease-out),box-shadow .6s var(--ease-out),border-color .6s;
+}
+.order-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 30px 56px -30px rgba(28,26,23,.35);
+  border-color:transparent;
+}
+.oc-kanji{
+  position:absolute;right:-1.2rem;bottom:-2.6rem;
+  font-size:6.8rem;font-weight:800;line-height:1;
+  color:transparent;-webkit-text-stroke:1px rgba(168,60,43,.12);
+  pointer-events:none;user-select:none;
+  transition:transform .8s var(--ease-out),-webkit-text-stroke-color .8s;
+}
+.order-card:hover .oc-kanji{transform:translateY(-6px) rotate(-2deg);-webkit-text-stroke-color:rgba(168,60,43,.3)}
+.order-card h3{font-size:1.2rem;letter-spacing:.2em;font-weight:600;margin-bottom:1rem}
+.order-card h3::before{
+  content:"";display:inline-block;width:.55em;height:.55em;border-radius:50%;
+  background:var(--shu);margin-right:.7em;vertical-align:.08em;
+  transition:transform .5s var(--ease-out);
+}
+.order-card:hover h3::before{transform:scale(1.35)}
+.order-card p{font-size:.9rem;color:var(--ink-soft);line-height:2.1}
+.oc-arrow{
+  display:inline-block;margin-top:1.4rem;color:var(--shu);
+  transform:translateX(-6px);opacity:0;
+  transition:transform .5s var(--ease-out),opacity .5s;
+}
+.order-card:hover .oc-arrow{transform:none;opacity:1}
+.order-cta{text-align:center;margin-top:3.4rem;position:relative;z-index:1}
+
+.btn-primary,.btn-ghost{
+  display:inline-flex;align-items:center;gap:.8rem;
+  font-size:.92rem;letter-spacing:.24em;
+  padding:1rem 2.6rem;border-radius:999px;
+  position:relative;overflow:hidden;
+  transition:color .5s var(--ease),border-color .5s,transform .5s var(--ease-out),box-shadow .5s var(--ease-out);
+  will-change:transform;
+}
+.btn-primary{background:var(--ink);color:var(--paper)}
+.btn-primary::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;
+  background:var(--shu);
+  transform:translateX(-101%);transition:transform .55s var(--ease-out);
+}
+.btn-primary:hover::before{transform:none}
+.btn-primary:hover{box-shadow:0 18px 34px -16px rgba(168,60,43,.55)}
+.btn-primary i,.btn-primary span{position:relative;z-index:1}
+.btn-ghost{border:1px solid var(--line);color:var(--ink);background:transparent}
+.btn-ghost::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;
+  background:var(--ink);
+  transform:translateY(101%);transition:transform .55s var(--ease-out);
+}
+.btn-ghost:hover{color:var(--paper);border-color:var(--ink)}
+.btn-ghost:hover::before{transform:none}
+.btn-primary i,.btn-ghost i{font-style:normal;position:relative;z-index:1;transition:transform .45s var(--ease-out)}
+.btn-primary:hover i,.btn-ghost:hover i{transform:translateX(6px)}
+.btn-primary > *,.btn-ghost > *{position:relative;z-index:1}
+
+/* =========================================================
+   About
+   ========================================================= */
+.about{
+  max-width:1200px;margin:0 auto;
+  padding:clamp(5rem,12vh,8rem) clamp(1.4rem,5vw,4rem);
+  display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);
+  gap:clamp(2rem,6vw,5rem);align-items:center;
+}
+.about-fig{margin:0;overflow:hidden}
+.about-fig img{
+  width:100%;aspect-ratio:4/3;object-fit:cover;object-position:60% 45%;
+  transition:transform 1.6s var(--ease-out);
+}
+.about-fig:hover img{transform:scale(1.045)}
+.about-name{
+  font-size:clamp(2rem,4vw,3rem);font-weight:600;letter-spacing:.22em;
+  line-height:1.35;margin-bottom:1.6rem;
+}
+.about-name .en{
+  font-family:var(--latin);font-size:1rem;font-weight:400;font-style:italic;
+  color:var(--ink-faint);letter-spacing:.2em;margin-left:1.2rem;
+}
+.about-text{font-size:.95rem;color:var(--ink-soft);line-height:2.4}
+
+/* =========================================================
+   Contact
+   ========================================================= */
+.contact{
+  background:var(--wall);
+  padding:clamp(5rem,13vh,9rem) 1.5rem;
+  text-align:center;
+  position:relative;overflow:hidden;
+}
+.contact::before{
+  content:"便";position:absolute;left:-3rem;top:-4rem;
+  font-size:22rem;font-weight:800;line-height:1;
+  color:transparent;-webkit-text-stroke:1px rgba(28,26,23,.05);
+  pointer-events:none;user-select:none;
+}
+.contact-inner{position:relative;z-index:1}
+.contact-title{
+  font-size:clamp(1.9rem,3.6vw,2.6rem);font-weight:600;letter-spacing:.3em;
+  margin-bottom:1.8rem;line-height:1.3;
+}
+.contact-text{color:var(--ink-soft);font-size:.98rem;margin-bottom:2.6rem}
+.contact-btns{display:flex;justify-content:center;gap:1.2rem;flex-wrap:wrap}
+
+/* =========================================================
+   Footer
+   ========================================================= */
+.site-footer{
+  padding:4rem 1.5rem 3rem;text-align:center;
+  border-top:1px solid var(--line);
+}
+.foot-enso{display:inline-block;width:44px;height:44px;margin-bottom:1.2rem}
+.foot-enso svg circle{
+  fill:none;stroke:var(--ink-faint);stroke-width:6;stroke-linecap:round;
+  stroke-dasharray:88 12;transform:rotate(-70deg);transform-origin:center;
+  transition:stroke .5s;
+}
+.foot-enso:hover svg circle{stroke:var(--shu)}
+.foot-brand{font-size:1.05rem;letter-spacing:.3em}
+.foot-brand em{font-family:var(--latin);font-style:italic;font-size:.85rem;color:var(--ink-faint);margin-left:.8em}
+.foot-copy{margin-top:.8rem;font-family:var(--latin);font-size:.72rem;letter-spacing:.26em;color:var(--ink-faint)}
+
+/* =========================================================
+   Lightbox
+   ========================================================= */
+.lightbox{
+  position:fixed;inset:0;z-index:90;
+  background:rgba(20,18,16,.93);
+  display:grid;place-items:center;
+  opacity:0;transition:opacity .5s var(--ease-soft);
+}
+.lightbox[hidden]{display:none}
+.lightbox.on{opacity:1}
+.lb-fig{
+  margin:0;max-width:min(92vw,760px);max-height:88vh;text-align:center;
+  transform:scale(.96);transition:transform .6s var(--ease-out);
+}
+.lightbox.on .lb-fig{transform:none}
+.lb-fig img{max-height:72vh;width:auto;max-width:100%;margin:0 auto;box-shadow:0 40px 90px -40px rgba(0,0,0,.9)}
+.lb-cap{
+  margin-top:1.4rem;color:var(--paper);
+  display:flex;justify-content:center;align-items:baseline;gap:1.4rem;flex-wrap:wrap;
+}
+.lb-cap strong{font-size:1.2rem;letter-spacing:.2em;font-weight:500}
+.lb-cap span{font-family:var(--latin);font-size:.85rem;letter-spacing:.16em;color:rgba(247,245,241,.7)}
+.lb-close{
+  position:absolute;top:1.4rem;right:1.8rem;
+  background:none;border:none;color:var(--paper);
+  font-size:2.2rem;line-height:1;cursor:pointer;opacity:.8;transition:opacity .3s,transform .4s var(--ease-out);
+}
+.lb-close:hover{opacity:1;transform:rotate(90deg)}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+@media (max-width: 960px){
+  .stage,.stage.rev{grid-template-columns:1fr;gap:2rem}
+  .stage.rev .stage-fig{order:0}
+  .stage.rev .stage-info{order:1;text-align:left}
+  .stage.rev .stage-info .stage-link{flex-direction:row}
+  .order-grid{grid-template-columns:1fr;max-width:560px}
+  .about{grid-template-columns:1fr}
+  .hero-enso{opacity:.22}
+  .hero-stroke{bottom:-11rem;width:min(24rem,78%);left:-4%}
+}
+@media (max-width: 760px){
+  .site-nav{
+    position:fixed;inset:0;z-index:-1;
+    background:var(--paper);
+    flex-direction:column;justify-content:center;align-items:center;gap:2rem;
+    opacity:0;visibility:hidden;transition:opacity .5s var(--ease),visibility .5s;
+  }
+  .nav-open .site-nav{opacity:1;visibility:visible;z-index:49}
+  .site-nav a{font-size:1.3rem}
+  .nav-burger{display:block}
+  .hero-copy{flex-direction:column;gap:2rem;padding-top:6rem}
+  .tate{height:auto;max-height:none;writing-mode:horizontal-tb;border-right:none;border-left:2px solid var(--shu);padding:0 0 0 1rem;letter-spacing:.3em}
+  .tate-mask{clip-path:inset(0 100% 0 -5%);animation-name:tateRevealH}
+  .brand-en{display:none}
+  .col-grid{grid-template-columns:repeat(2,1fr)}
+}
+@keyframes tateRevealH{to{clip-path:inset(0 -5% 0 -5%)}}
+
+</style>
+</head>
+<body>
+
+<!-- ===== Loading sequence ===== -->
+<div class="veil" id="veil" aria-hidden="true">
+  <div class="veil-inner">
+    <svg class="veil-enso" viewBox="0 0 120 120">
+      <circle cx="60" cy="60" r="44" pathLength="100"/>
+    </svg>
+    <p class="veil-name">衛藤仁胡</p>
+    <p class="veil-en">Eto Niko</p>
+  </div>
+</div>
+
+<!-- ===== Custom cursor (desktop) ===== -->
+<div class="cursor" id="cursor" aria-hidden="true"><span class="cursor-label"></span></div>
+
+<!-- ===== Header ===== -->
+<header class="site-header" id="siteHeader">
+  <a class="brand" href="#top" data-magnetic>
+    <span class="brand-ja">衛藤仁胡</span>
+    <span class="brand-en">Eto Niko</span>
+  </a>
+  <nav class="site-nav" id="siteNav" aria-label="メインナビゲーション">
+    <a href="#works" data-cursor><span>作品</span><small>Works</small></a>
+    <a href="#collection" data-cursor><span>一覧</span><small>Collection</small></a>
+    <a href="#order" data-cursor><span>誂え</span><small>Commission</small></a>
+    <a href="#about" data-cursor><span>仁胡</span><small>About</small></a>
+    <a href="#contact" data-cursor><span>便り</span><small>Contact</small></a>
+  </nav>
+  <div class="header-tools">
+    <button class="motion-toggle" id="motionToggle" type="button" aria-pressed="false" title="演出のオン・オフを切り替え" data-cursor>
+      <span class="mt-dou">動</span><span class="mt-sei">静</span>
+    </button>
+    <button class="nav-burger" id="navBurger" type="button" aria-label="メニュー"><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ===== Hero ===== -->
+  <section class="hero" id="hero">
+    <div class="hero-photo" data-parallax="0.12">
+      <img src="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/hero.jpg" alt="筆を執る書家・衛藤仁胡の手元" id="heroImg">
+    </div>
+    <svg class="hero-enso" viewBox="0 0 120 120" aria-hidden="true">
+      <circle cx="60" cy="60" r="46" pathLength="100"/>
+    </svg>
+    <div class="hero-copy">
+      <p class="hero-lead tate"><span class="tate-mask">一筆に、いのちを。</span></p>
+      <div class="hero-title">
+        <h1 class="hero-name" id="heroName" aria-label="衛藤仁胡">衛藤仁胡</h1>
+        <p class="hero-name-en">Eto Niko — Japanese Calligraphy Artist</p>
+        <p class="hero-sub">文字の美を追求し、独自の表現へと昇華させた書。<br>静けさの中に、確かな躍動を。</p>
+        <img class="hero-stroke" src="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/textures/stroke.png" alt="" aria-hidden="true">
+      </div>
+    </div>
+    <a class="scroll-cue" href="#statement" data-cursor><span>Scroll</span><i></i></a>
+  </section>
+
+  <!-- ===== Statement ===== -->
+  <section class="statement" id="statement">
+    <p class="statement-text" data-anim="lines">
+      <span class="line">書は、一瞬の呼吸を紙に封じる芸術。</span>
+      <span class="line">筆が触れ、離れるまでのわずかな時間に、</span>
+      <span class="line">その人の生きてきた時間のすべてが滲む。</span>
+    </p>
+    <span class="statement-seal" data-anim="fade" aria-hidden="true">仁胡</span>
+  </section>
+
+  <!-- ===== Featured works ===== -->
+  <section class="works" id="works">
+    <header class="sec-head">
+      <p class="sec-label" data-anim="fade"><span class="sec-index">01</span><span class="sec-rule"></span><span class="sec-en">Works</span></p>
+      <h2 class="sec-title" data-anim="lines"><span class="line">作品</span></h2>
+      <p class="sec-desc" data-anim="fade" data-delay="200">一点、一点。同じ文字は、二度と書けない。<br>いま出会える作品たちです。</p>
+    </header>
+
+    <!-- 月 -->
+    <article class="stage" data-kanji="月">
+      <figure class="stage-fig" data-anim="wipe">
+        <a class="zoomable" href="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/tsuki-frame.jpg" data-title="月 — moon" data-price="¥45,000" data-note="額装 / Frame" data-cursor="view" data-tilt>
+          <img src="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/tsuki-frame.jpg" alt="書作品「月」額装" loading="lazy">
+        </a>
+      </figure>
+      <div class="stage-info">
+        <p class="stage-cat" data-anim="fade">Frame — 額装</p>
+        <h3 class="stage-name" data-anim="lines"><span class="line">月<span class="stage-name-en">moon</span></span></h3>
+        <p class="stage-essay" data-anim="fade" data-delay="150">満ちて、欠けて、また満ちる。<br>静かな夜の呼吸を、一筆に。</p>
+        <p class="stage-price" data-anim="fade" data-delay="250">¥45,000 <span class="stock ok">販売中</span></p>
+        <a class="stage-link" href="#contact" data-shop-link data-anim="fade" data-delay="350" data-cursor>この作品について問い合わせる<i>→</i></a>
+      </div>
+    </article>
+
+    <!-- ひかり -->
+    <article class="stage rev" data-kanji="光">
+      <figure class="stage-fig" data-anim="wipe">
+        <a class="zoomable" href="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/hikari.jpg" data-title="ひかり — Glow" data-price="¥45,000" data-note="パネル / Panel" data-cursor="view" data-tilt>
+          <img src="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/hikari.jpg" alt="書作品「ひかり」パネル" loading="lazy">
+        </a>
+      </figure>
+      <div class="stage-info">
+        <p class="stage-cat" data-anim="fade">Panel — パネル</p>
+        <h3 class="stage-name" data-anim="lines"><span class="line">ひかり<span class="stage-name-en">Glow</span></span></h3>
+        <p class="stage-essay" data-anim="fade" data-delay="150">闇があるから、ひかりは生まれる。<br>細く、強く、まっすぐに。</p>
+        <p class="stage-price" data-anim="fade" data-delay="250">¥45,000 <span class="stock ok">販売中</span></p>
+        <a class="stage-link" href="#contact" data-shop-link data-anim="fade" data-delay="350" data-cursor>この作品について問い合わせる<i>→</i></a>
+      </div>
+    </article>
+
+    <!-- 海 -->
+    <article class="stage" data-kanji="海">
+      <figure class="stage-fig" data-anim="wipe">
+        <a class="zoomable" href="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/umi-spring.jpg" data-title="海 — sea" data-price="¥45,000" data-note="パネル / Panel" data-cursor="view" data-tilt>
+          <img src="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/umi-spring.jpg" alt="書作品「海」淡彩パネル" loading="lazy">
+        </a>
+      </figure>
+      <div class="stage-info">
+        <p class="stage-cat" data-anim="fade">Panel — パネル</p>
+        <h3 class="stage-name" data-anim="lines"><span class="line">海<span class="stage-name-en">sea</span></span></h3>
+        <p class="stage-essay" data-anim="fade" data-delay="150">淡い春の海。寄せてはかえす<br>波の記憶を、にじみに込めて。</p>
+        <p class="stage-price" data-anim="fade" data-delay="250">¥45,000 <span class="stock ok">販売中</span></p>
+        <a class="stage-link" href="#contact" data-shop-link data-anim="fade" data-delay="350" data-cursor>この作品について問い合わせる<i>→</i></a>
+      </div>
+    </article>
+
+    <!-- 舞 -->
+    <article class="stage rev" data-kanji="舞">
+      <figure class="stage-fig" data-anim="wipe">
+        <a class="zoomable" href="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/mai.jpg" data-title="舞 — Dance" data-price="¥42,000" data-note="額装 / Frame" data-cursor="view" data-tilt>
+          <img src="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/mai.jpg" alt="書作品「舞」額装" loading="lazy">
+        </a>
+      </figure>
+      <div class="stage-info">
+        <p class="stage-cat" data-anim="fade">Frame — 額装</p>
+        <h3 class="stage-name" data-anim="lines"><span class="line">舞<span class="stage-name-en">Dance</span></span></h3>
+        <p class="stage-essay" data-anim="fade" data-delay="150">風をまとい、紙の上で舞う。<br>墨が描く、いのちの軌跡。</p>
+        <p class="stage-price" data-anim="fade" data-delay="250">¥42,000 <span class="stock ok">販売中</span></p>
+        <a class="stage-link" href="#contact" data-shop-link data-anim="fade" data-delay="350" data-cursor>この作品について問い合わせる<i>→</i></a>
+      </div>
+    </article>
+
+    <!-- 福 -->
+    <article class="stage" data-kanji="福">
+      <figure class="stage-fig" data-anim="wipe">
+        <a class="zoomable" href="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/fuku.jpg" data-title="福 — Blessing" data-price="¥42,000" data-note="額装 / Frame" data-cursor="view" data-tilt>
+          <img src="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/fuku.jpg" alt="書作品「福」額装" loading="lazy">
+        </a>
+      </figure>
+      <div class="stage-info">
+        <p class="stage-cat" data-anim="fade">Frame — 額装</p>
+        <h3 class="stage-name" data-anim="lines"><span class="line">福<span class="stage-name-en">Blessing</span></span></h3>
+        <p class="stage-essay" data-anim="fade" data-delay="150">まるく、やわらかく。<br>日々の暮らしに、そっと福を。</p>
+        <p class="stage-price" data-anim="fade" data-delay="250">¥42,000 <span class="stock ok">販売中</span></p>
+        <a class="stage-link" href="#contact" data-shop-link data-anim="fade" data-delay="350" data-cursor>この作品について問い合わせる<i>→</i></a>
+      </div>
+    </article>
+  </section>
+
+  <!-- ===== Collection ===== -->
+  <section class="collection" id="collection">
+    <header class="sec-head">
+      <p class="sec-label" data-anim="fade"><span class="sec-index">02</span><span class="sec-rule"></span><span class="sec-en">Collection</span></p>
+      <h2 class="sec-title" data-anim="lines"><span class="line">作品一覧</span></h2>
+      <p class="sec-desc" data-anim="fade" data-delay="200">これまでの作品より。完売作品も、オーダーメイドでのご相談を承ります。</p>
+    </header>
+    <div class="col-grid">
+      <a class="col-item zoomable" href="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/tsuki-frame.jpg" data-title="月 — moon" data-price="¥45,000" data-note="額装 / Frame" data-anim="up" data-cursor="view">
+        <figure><img src="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/tsuki-frame.jpg" alt="月 moon" loading="lazy"></figure>
+        <div class="ci-meta"><h3>月<em>moon</em></h3><p class="ci-price">¥45,000</p></div>
+      </a>
+      <a class="col-item zoomable" href="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/hikari.jpg" data-title="ひかり — Glow" data-price="¥45,000" data-note="パネル / Panel" data-anim="up" data-cursor="view">
+        <figure><img src="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/hikari.jpg" alt="ひかり Glow" loading="lazy"></figure>
+        <div class="ci-meta"><h3>ひかり<em>Glow</em></h3><p class="ci-price">¥45,000</p></div>
+      </a>
+      <a class="col-item zoomable" href="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/umi-spring.jpg" data-title="海 — sea" data-price="¥45,000" data-note="パネル / Panel" data-anim="up" data-cursor="view">
+        <figure><img src="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/umi-spring.jpg" alt="海 sea" loading="lazy"></figure>
+        <div class="ci-meta"><h3>海<em>sea</em></h3><p class="ci-price">¥45,000</p></div>
+      </a>
+      <a class="col-item zoomable" href="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/mai.jpg" data-title="舞 — Dance" data-price="¥42,000" data-note="額装 / Frame" data-anim="up" data-cursor="view">
+        <figure><img src="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/mai.jpg" alt="舞 Dance" loading="lazy"></figure>
+        <div class="ci-meta"><h3>舞<em>Dance</em></h3><p class="ci-price">¥42,000</p></div>
+      </a>
+      <a class="col-item zoomable" href="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/fuku.jpg" data-title="福 — Blessing" data-price="¥42,000" data-note="額装 / Frame" data-anim="up" data-cursor="view">
+        <figure><img src="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/fuku.jpg" alt="福 Blessing" loading="lazy"></figure>
+        <div class="ci-meta"><h3>福<em>Blessing</em></h3><p class="ci-price">¥42,000</p></div>
+      </a>
+      <a class="col-item sold zoomable" href="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/mai-black.jpg" data-title="舞 — Dance" data-price="¥42,000 / 完売" data-note="額装 / Frame" data-anim="up" data-cursor="view">
+        <figure><img src="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/mai-black.jpg" alt="舞 Dance 黒額" loading="lazy"><span class="ci-badge">完売</span></figure>
+        <div class="ci-meta"><h3>舞<em>Dance</em></h3><p class="ci-price">¥42,000</p></div>
+      </a>
+      <a class="col-item sold zoomable" href="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/fuku-2.jpg" data-title="福 — Blessing" data-price="¥42,000 / 完売" data-note="額装 / Frame" data-anim="up" data-cursor="view">
+        <figure><img src="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/fuku-2.jpg" alt="福 Blessing" loading="lazy"><span class="ci-badge">完売</span></figure>
+        <div class="ci-meta"><h3>福<em>Blessing</em></h3><p class="ci-price">¥42,000</p></div>
+      </a>
+      <a class="col-item sold zoomable" href="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/bi.jpg" data-title="美 — Beauty" data-price="¥42,000 / 完売" data-note="額装 / Frame" data-anim="up" data-cursor="view">
+        <figure><img src="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/bi.jpg" alt="美 Beauty" loading="lazy"><span class="ci-badge">完売</span></figure>
+        <div class="ci-meta"><h3>美<em>Beauty</em></h3><p class="ci-price">¥42,000</p></div>
+      </a>
+      <a class="col-item sold zoomable" href="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/hokori.jpg" data-title="誇 — Pride" data-price="¥42,000 / 完売" data-note="額装 / Frame" data-anim="up" data-cursor="view">
+        <figure><img src="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/hokori.jpg" alt="誇 Pride" loading="lazy"><span class="ci-badge">完売</span></figure>
+        <div class="ci-meta"><h3>誇<em>Pride</em></h3><p class="ci-price">¥42,000</p></div>
+      </a>
+      <a class="col-item sold zoomable" href="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/kansha-48.jpg" data-title="感謝 — Thank you" data-price="¥48,000 / 完売" data-note="額装 / Frame" data-anim="up" data-cursor="view">
+        <figure><img src="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/kansha-48.jpg" alt="感謝 Thank you" loading="lazy"><span class="ci-badge">完売</span></figure>
+        <div class="ci-meta"><h3>感謝<em>Thank you</em></h3><p class="ci-price">¥48,000</p></div>
+      </a>
+      <a class="col-item sold zoomable" href="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/kansha-50.jpg" data-title="感謝 — Thank you" data-price="¥50,000 / 完売" data-note="額装 / Frame" data-anim="up" data-cursor="view">
+        <figure><img src="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/kansha-50.jpg" alt="感謝 Thank you" loading="lazy"><span class="ci-badge">完売</span></figure>
+        <div class="ci-meta"><h3>感謝<em>Thank you</em></h3><p class="ci-price">¥50,000</p></div>
+      </a>
+      <a class="col-item sold zoomable" href="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/umi.jpg" data-title="海 — sea" data-price="¥42,000 / 完売" data-note="額装 / Frame" data-anim="up" data-cursor="view">
+        <figure><img src="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/umi.jpg" alt="海 sea" loading="lazy"><span class="ci-badge">完売</span></figure>
+        <div class="ci-meta"><h3>海<em>sea</em></h3><p class="ci-price">¥42,000</p></div>
+      </a>
+      <a class="col-item sold zoomable" href="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/enso.jpg" data-title="円相 — Ensō" data-price="¥42,000 / 完売" data-note="額装 / Frame" data-anim="up" data-cursor="view">
+        <figure><img src="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/enso.jpg" alt="円相 Ensō" loading="lazy"><span class="ci-badge">完売</span></figure>
+        <div class="ci-meta"><h3>円相<em>Ensō</em></h3><p class="ci-price">¥42,000</p></div>
+      </a>
+      <a class="col-item sold zoomable" href="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/enso-black.jpg" data-title="円相 — Ensō" data-price="¥42,000 / 完売" data-note="額装 / Frame" data-anim="up" data-cursor="view">
+        <figure><img src="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/enso-black.jpg" alt="円相 Ensō 黒額" loading="lazy"><span class="ci-badge">完売</span></figure>
+        <div class="ci-meta"><h3>円相<em>Ensō</em></h3><p class="ci-price">¥42,000</p></div>
+      </a>
+      <a class="col-item sold zoomable" href="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/arigato.jpg" data-title="ありがとう — thank you" data-price="¥46,000 / 完売" data-note="パネル / Panel" data-anim="up" data-cursor="view">
+        <figure><img src="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/arigato.jpg" alt="ありがとう thank you" loading="lazy"><span class="ci-badge">完売</span></figure>
+        <div class="ci-meta"><h3>ありがとう<em>thank you</em></h3><p class="ci-price">¥46,000</p></div>
+      </a>
+      <a class="col-item sold zoomable" href="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/magokoro.jpg" data-title="真ごころ — Sincerity" data-price="¥43,000 / 完売" data-note="パネル / Panel" data-anim="up" data-cursor="view">
+        <figure><img src="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/magokoro.jpg" alt="真ごころ Sincerity" loading="lazy"><span class="ci-badge">完売</span></figure>
+        <div class="ci-meta"><h3>真ごころ<em>Sincerity</em></h3><p class="ci-price">¥43,000</p></div>
+      </a>
+      <a class="col-item sold zoomable" href="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/inochi.jpg" data-title="いのち — Life" data-price="¥42,000 / 完売" data-note="パネル / Panel" data-anim="up" data-cursor="view">
+        <figure><img src="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/inochi.jpg" alt="いのち Life" loading="lazy"><span class="ci-badge">完売</span></figure>
+        <div class="ci-meta"><h3>いのち<em>Life</em></h3><p class="ci-price">¥42,000</p></div>
+      </a>
+      <a class="col-item sold zoomable" href="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/tsuki-crescent.jpg" data-title="月 — moon" data-price="¥45,000 / 完売" data-note="額装 / Frame" data-anim="up" data-cursor="view">
+        <figure><img src="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/works/tsuki-crescent.jpg" alt="月 moon 三日月" loading="lazy"><span class="ci-badge">完売</span></figure>
+        <div class="ci-meta"><h3>月<em>moon</em></h3><p class="ci-price">¥45,000</p></div>
+      </a>
+    </div>
+    <p class="col-cats" data-anim="fade">Frame ／ Panel ／ Original Calendar ／ 福ダルマ</p>
+  </section>
+
+  <!-- ===== Order ===== -->
+  <section class="order" id="order">
+    <header class="sec-head">
+      <p class="sec-label" data-anim="fade"><span class="sec-index">03</span><span class="sec-rule"></span><span class="sec-en">Commission</span></p>
+      <h2 class="sec-title" data-anim="lines"><span class="line">誂えの書</span></h2>
+      <p class="sec-desc" data-anim="fade" data-delay="200">世界にひとつ、あなたのための一筆を。</p>
+    </header>
+    <div class="order-grid">
+      <div class="order-card" data-anim="up" data-cursor>
+        <span class="oc-kanji" aria-hidden="true">書</span>
+        <h3>オーダーメイド作品</h3>
+        <p>大切な言葉、座右の銘、贈りたい想い。ご希望の文字を、額装・パネル作品に仕立ててお届けします。</p>
+        <span class="oc-arrow" aria-hidden="true">→</span>
+      </div>
+      <div class="order-card" data-anim="up" data-delay="120" data-cursor>
+        <span class="oc-kanji" aria-hidden="true">名</span>
+        <h3>命名書</h3>
+        <p>お子さまの誕生に、祝福の一筆を。名に込められた願いを、美しいかたちで残します。</p>
+        <span class="oc-arrow" aria-hidden="true">→</span>
+      </div>
+      <div class="order-card" data-anim="up" data-delay="240" data-cursor>
+        <span class="oc-kanji" aria-hidden="true">号</span>
+        <h3>屋号・ロゴ揮毫</h3>
+        <p>店名・ブランドロゴ・題字。手書きの書は、他にない「顔」になります。法人・店舗のご依頼も承ります。</p>
+        <span class="oc-arrow" aria-hidden="true">→</span>
+      </div>
+    </div>
+    <div class="order-cta" data-anim="fade" data-delay="300">
+      <a class="btn-primary" href="#contact" data-magnetic data-cursor><span>制作のご相談</span><i>→</i></a>
+    </div>
+  </section>
+
+  <!-- ===== About ===== -->
+  <section class="about" id="about">
+    <figure class="about-fig" data-anim="wipe">
+      <img src="https://raw.githubusercontent.com/ANDROMEDAJAPAN/nikoeto/claude/calligraphy-site-redesign-rw7rq6/assets/img/hero.jpg" alt="制作中の衛藤仁胡" loading="lazy" data-parallax="0.06">
+    </figure>
+    <div class="about-body">
+      <p class="sec-label" data-anim="fade"><span class="sec-index">04</span><span class="sec-rule"></span><span class="sec-en">About</span></p>
+      <h2 class="about-name" data-anim="lines"><span class="line">衛藤仁胡<span class="en">Eto Niko</span></span></h2>
+      <p class="about-text" data-anim="fade" data-delay="200">
+        書道家。文字の美を追求し、独自の表現へと昇華させた書をお届けしています。<br><br>
+        古典に学んだ確かな筆致と、余白を生かした現代的な構成。一つひとつの文字に宿る意味と呼吸を大切に、暮らしの中に静かに寄り添う作品を制作しています。<br><br>
+        オーダーメイド作品や命名書、屋号の制作も承っております。
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== Contact ===== -->
+  <section class="contact" id="contact">
+    <div class="contact-inner">
+      <p class="sec-label center" data-anim="fade"><span class="sec-index">05</span><span class="sec-rule"></span><span class="sec-en">Contact</span></p>
+      <h2 class="contact-title" data-anim="lines"><span class="line">便り</span></h2>
+      <p class="contact-text" data-anim="fade" data-delay="150">作品のご購入・オーダーメイドのご相談は、<br>Instagram のダイレクトメッセージ、またはオンラインショップよりお気軽にどうぞ。</p>
+      <div class="contact-btns" data-anim="fade" data-delay="300">
+        <a class="btn-primary" href="#" data-instagram-link data-magnetic data-cursor><span>Instagram でご相談</span><i>→</i></a>
+        <a class="btn-ghost" href="#" data-shop-link data-magnetic data-cursor><span>オンラインショップへ</span><i>→</i></a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <span class="foot-enso" aria-hidden="true">
+    <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="44" pathLength="100"/></svg>
+  </span>
+  <p class="foot-brand">衛藤仁胡 <em>Eto Niko</em></p>
+  <p class="foot-copy">© online shop niko</p>
+</footer>
+
+<!-- ===== Lightbox ===== -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="作品拡大表示" hidden>
+  <button class="lb-close" id="lbClose" aria-label="閉じる" data-cursor>×</button>
+  <figure class="lb-fig">
+    <img id="lbImg" src="" alt="">
+    <figcaption class="lb-cap">
+      <strong id="lbTitle"></strong>
+      <span id="lbNote"></span>
+      <span id="lbPrice"></span>
+    </figcaption>
+  </figure>
+</div>
+
+<script>
+/* =========================================================
+   衛藤仁胡 | Eto Niko — interactions
+   ========================================================= */
+
+/* ---- 運営設定: 公開前にここを実URLに差し替える ---- */
+const CONFIG = {
+  shopUrl: '',       // 例: 'https://xxxx.thebase.in'  (BASEショップURL)
+  instagramUrl: '',  // 例: 'https://www.instagram.com/xxxx/'
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+
+  /* ---- external links ---- */
+  document.querySelectorAll('[data-shop-link]').forEach(a => {
+    if (CONFIG.shopUrl) { a.href = CONFIG.shopUrl; a.target = '_blank'; a.rel = 'noopener'; }
+  });
+  document.querySelectorAll('[data-instagram-link]').forEach(a => {
+    if (CONFIG.instagramUrl) { a.href = CONFIG.instagramUrl; a.target = '_blank'; a.rel = 'noopener'; }
+    else a.href = '#contact';
+  });
+
+  /* ---- text preparation: line masks & char splitting ---- */
+  document.querySelectorAll('[data-anim="lines"] .line').forEach(line => {
+    const inner = document.createElement('span');
+    inner.className = 'line-inner';
+    while (line.firstChild) inner.appendChild(line.firstChild);
+    line.appendChild(inner);
+  });
+
+  const heroName = document.getElementById('heroName');
+  if (heroName) {
+    const text = heroName.textContent;
+    heroName.textContent = '';
+    [...text].forEach((ch, i) => {
+      const s = document.createElement('span');
+      s.className = 'char';
+      s.textContent = ch;
+      s.style.transitionDelay = `${1100 + i * 120}ms`;
+      heroName.appendChild(s);
+    });
+    requestAnimationFrame(() => requestAnimationFrame(() =>
+      heroName.classList.add('chars-in')));
+  }
+
+  /* ---- loading veil ---- */
+  const veil = document.getElementById('veil');
+  window.setTimeout(() => veil.classList.add('off'), prefersReduced ? 200 : 1500);
+
+  /* ---- header: shrink + hide on scroll down ---- */
+  const header = document.getElementById('siteHeader');
+  let lastY = window.scrollY;
+  const onScrollHeader = () => {
+    const y = window.scrollY;
+    header.classList.toggle('scrolled', y > 40);
+    if (!document.body.classList.contains('nav-open')) {
+      header.classList.toggle('hidden', y > 500 && y > lastY + 4);
+    }
+    if (y < lastY - 4 || y <= 500) header.classList.remove('hidden');
+    lastY = y;
+  };
+  window.addEventListener('scroll', onScrollHeader, { passive: true });
+  onScrollHeader();
+
+  /* ---- mobile nav ---- */
+  const burger = document.getElementById('navBurger');
+  burger.addEventListener('click', () => document.body.classList.toggle('nav-open'));
+  document.querySelectorAll('.site-nav a').forEach(a =>
+    a.addEventListener('click', () => document.body.classList.remove('nav-open')));
+
+  /* ---- 動/静 toggle ---- */
+  const toggle = document.getElementById('motionToggle');
+  const applyStill = (still) => {
+    document.body.classList.toggle('still', still);
+    toggle.setAttribute('aria-pressed', String(still));
+    try { localStorage.setItem('niko-still', still ? '1' : '0'); } catch (e) {}
+  };
+  toggle.addEventListener('click', () =>
+    applyStill(!document.body.classList.contains('still')));
+  let saved = null;
+  try { saved = localStorage.getItem('niko-still'); } catch (e) {}
+  if (saved === '1' || (saved === null && prefersReduced)) applyStill(true);
+
+  /* ---- entrance animations ---- */
+  const staggerGroups = new Map(); // container -> counter (for grid stagger)
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      // grid items: stagger by arrival order within their parent
+      if (el.dataset.anim === 'up' && el.parentElement.classList.contains('col-grid')) {
+        const parent = el.parentElement;
+        const n = staggerGroups.get(parent) || 0;
+        el.style.setProperty('--d', `${(n % 4) * 90}ms`);
+        staggerGroups.set(parent, n + 1);
+        window.setTimeout(() => staggerGroups.set(parent, 0), 400);
+      } else if (el.dataset.delay) {
+        el.style.setProperty('--d', `${el.dataset.delay}ms`);
+      }
+      el.classList.add('in');
+      revealObs.unobserve(el);
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+  document.querySelectorAll('[data-anim]').forEach(el => revealObs.observe(el));
+
+  /* ---- parallax (hero photo, kanji watermarks, about photo) ---- */
+  const pxEls = document.querySelectorAll('[data-parallax]');
+  const kanjiStages = document.querySelectorAll('.stage');
+  let ticking = false;
+  const parallax = () => {
+    ticking = false;
+    if (document.body.classList.contains('still') || prefersReduced) return;
+    const vh = window.innerHeight;
+    pxEls.forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > vh) return;
+      const p = (r.top + r.height / 2 - vh / 2) / vh;
+      el.style.transform = `translateY(${p * parseFloat(el.dataset.parallax) * -160}px)`;
+    });
+    kanjiStages.forEach(st => {
+      const r = st.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > vh) return;
+      const p = (r.top + r.height / 2 - vh / 2) / vh;
+      st.style.setProperty('--ky', `${p * 60}px`);
+    });
+  };
+  window.addEventListener('scroll', () => {
+    if (!ticking) { ticking = true; requestAnimationFrame(parallax); }
+  }, { passive: true });
+  parallax();
+
+  /* ---- custom cursor ---- */
+  const cursor = document.getElementById('cursor');
+  const cursorLabel = cursor.querySelector('.cursor-label');
+  if (!isTouch && !prefersReduced) {
+    let cx = -100, cy = -100, tx = -100, ty = -100, cursorOn = false;
+    document.addEventListener('mousemove', (ev) => {
+      tx = ev.clientX; ty = ev.clientY;
+      if (!cursorOn) { cursorOn = true; cursor.classList.add('on'); cx = tx; cy = ty; }
+    });
+    document.addEventListener('mouseleave', () => { cursorOn = false; cursor.classList.remove('on'); });
+    const loop = () => {
+      cx += (tx - cx) * 0.18;
+      cy += (ty - cy) * 0.18;
+      cursor.style.transform = `translate(${cx}px, ${cy}px) translate(-50%,-50%)`;
+      requestAnimationFrame(loop);
+    };
+    loop();
+    document.querySelectorAll('[data-cursor]').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        const mode = el.getAttribute('data-cursor');
+        if (mode === 'view') { cursor.classList.add('view'); cursorLabel.textContent = 'VIEW'; }
+        else cursor.classList.add('hover');
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.classList.remove('view', 'hover');
+        cursorLabel.textContent = '';
+      });
+    });
+  }
+
+  /* ---- magnetic buttons ---- */
+  if (!isTouch && !prefersReduced) {
+    document.querySelectorAll('[data-magnetic]').forEach(el => {
+      const strength = 0.25;
+      el.addEventListener('mousemove', (ev) => {
+        if (document.body.classList.contains('still')) return;
+        const r = el.getBoundingClientRect();
+        const dx = ev.clientX - (r.left + r.width / 2);
+        const dy = ev.clientY - (r.top + r.height / 2);
+        el.style.transform = `translate(${dx * strength}px, ${dy * strength}px)`;
+      });
+      el.addEventListener('mouseleave', () => {
+        el.style.transition = 'transform .6s cubic-bezier(.16,1,.3,1)';
+        el.style.transform = '';
+        window.setTimeout(() => { el.style.transition = ''; }, 600);
+      });
+    });
+  }
+
+  /* ---- subtle 3D tilt on stage artworks ---- */
+  if (!isTouch && !prefersReduced) {
+    document.querySelectorAll('[data-tilt]').forEach(el => {
+      el.addEventListener('mousemove', (ev) => {
+        if (document.body.classList.contains('still')) return;
+        const r = el.getBoundingClientRect();
+        const px = (ev.clientX - r.left) / r.width - 0.5;
+        const py = (ev.clientY - r.top) / r.height - 0.5;
+        el.style.transform = `perspective(900px) rotateY(${px * 5}deg) rotateX(${py * -5}deg) translateY(-4px)`;
+      });
+      el.addEventListener('mouseleave', () => {
+        el.style.transition = 'transform .8s cubic-bezier(.16,1,.3,1), box-shadow .8s';
+        el.style.transform = '';
+        window.setTimeout(() => { el.style.transition = ''; }, 800);
+      });
+    });
+  }
+
+  /* ---- lightbox ---- */
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
+  const lbTitle = document.getElementById('lbTitle');
+  const lbNote = document.getElementById('lbNote');
+  const lbPrice = document.getElementById('lbPrice');
+
+  const openLb = (a) => {
+    lbImg.src = a.getAttribute('href');
+    lbImg.alt = a.dataset.title || '';
+    lbTitle.textContent = a.dataset.title || '';
+    lbNote.textContent = a.dataset.note || '';
+    lbPrice.textContent = a.dataset.price || '';
+    lb.hidden = false;
+    requestAnimationFrame(() => lb.classList.add('on'));
+    document.body.style.overflow = 'hidden';
+  };
+  const closeLb = () => {
+    lb.classList.remove('on');
+    document.body.style.overflow = '';
+    window.setTimeout(() => { lb.hidden = true; lbImg.src = ''; }, 500);
+  };
+  document.querySelectorAll('.zoomable').forEach(a => {
+    a.addEventListener('click', (ev) => { ev.preventDefault(); openLb(a); });
+  });
+  document.getElementById('lbClose').addEventListener('click', closeLb);
+  lb.addEventListener('click', (ev) => { if (ev.target === lb) closeLb(); });
+  document.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Escape' && !lb.hidden) closeLb();
+  });
+});
+
+</script>
+</body>
+</html>

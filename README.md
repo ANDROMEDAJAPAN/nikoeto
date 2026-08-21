@@ -27,6 +27,28 @@ const CONFIG = {
 };
 ```
 
+## Google Sites での表示方法
+
+**方法A(推奨): GitHub Pages のURLを埋め込む**
+
+このブランチへのpushで `.github/workflows/deploy-pages.yml` が
+GitHub Pages へ自動デプロイします。公開URL:
+
+```
+https://andromedajapan.github.io/nikoeto/
+```
+
+Google サイトの編集画面で 挿入 → 埋め込む → 「URL」に上記URLを貼り付け、
+埋め込みブロックを全幅に広げて高さを十分に(目安900px以上)確保してください。
+サイト全体(フォント・画像・演出)がそのまま表示されます。
+
+**方法B: 埋め込みコードを貼り付ける**
+
+`embed/googlesite-embed.html` の中身を全てコピーし、
+挿入 → 埋め込む → 「埋め込みコード」に貼り付けます。
+CSS/JSはインライン済み、画像はGitHubの公開URLを参照する単一HTMLです。
+サイト更新後は `python3 scripts/build_embed.py` で再生成してください。
+
 ## ローカル確認
 
 静的サイトなので、任意のHTTPサーバーで確認できます。
