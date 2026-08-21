@@ -31,8 +31,10 @@ const CONFIG = {
 
 **方法A(推奨): GitHub Pages のURLを埋め込む**
 
-このブランチへのpushで `.github/workflows/deploy-pages.yml` が
-GitHub Pages へ自動デプロイします。公開URL:
+初回のみ、リポジトリの Settings → Pages → 「Build and deployment」の
+Source を **GitHub Actions** に設定してください(権限の都合で自動有効化は不可)。
+設定後、Actions タブから失敗している「Deploy to GitHub Pages」を Re-run するか、
+このブランチに何かpushすれば `.github/workflows/deploy-pages.yml` が自動デプロイします。公開URL:
 
 ```
 https://andromedajapan.github.io/nikoeto/
